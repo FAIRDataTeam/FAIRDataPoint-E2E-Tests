@@ -1,0 +1,5 @@
+instance:
+  url: http://fdp-client
+
+server:
+  port: 80

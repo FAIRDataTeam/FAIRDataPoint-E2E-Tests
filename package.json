@@ -1,0 +1,10 @@
+{
+  "name": "dsw-e2e-tests",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "cypress": "^3.4.0",
+    "cypress-plugin-retries": "^1.2.0",
+    "mongodb": "^3.1.13"
+  }
+}
