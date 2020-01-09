@@ -33,15 +33,4 @@ describe('Login', () => {
             cy.getCy('user-menu-user').should('be.visible')
         })
     })
-
-    // it('can login as user', () => {
-    //     cy.fillFields({
-    //         email: Cypress.env('user_username'),
-    //         password: Cypress.env('user_password')
-    //     })
-    //     cy.getCy('login').click()
-    //     cy.getCy('user-menu').should('exist').find('button').click()
-    //     cy.getCy('user-menu-admin').should('not.visible')
-    //     cy.getCy('user-menu-user').should('be.visible')
-    // })
 })
