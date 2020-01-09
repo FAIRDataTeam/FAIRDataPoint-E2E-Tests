@@ -1,13 +1,18 @@
 {
     "env": {
-        "client_url": "http://localhost",
+        "client_url": "http://fdp-client",
         "open_refine_url": "http://localhost:3333",
+        "api_url": "http://fdp-client",
         "admin_username": "albert.einstein@example.com",
         "admin_password": "password",
+        "admin_first_name": "Albert",
+        "admin_last_name": "Einstein",
         "user_username": "nikola.tesla@example.com",
         "user_password": "password",
+        "user_first_name": "Nikola",
+        "user_last_name": "Tesla",
         "mongoUrl": "mongodb://localhost:27017",
-        "mongoDBName": "dsw-server-test"
+        "mongoDBName": "fdp"
     },
     "screenshotsFolder": "output/screenshots",
     "videosFolder": "output/videos",
