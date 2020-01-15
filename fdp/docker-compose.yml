@@ -1,9 +1,12 @@
 version: '3'
 services:
 
-  fdp-server:
-    image: fairdata/fairdatapoint:1.0.0
+  server:
+    # image: fairdata/fairdatapoint:1.0.0
+    image: fairdata/fairdatapoint:chore-improvements
     restart: always
+    ports:
+      - 3000:3000
     volumes:
       - ./application-production.yml:/fdp/application-production.yml:ro
 
@@ -25,3 +28,11 @@ services:
     ports:
       - 27017:27017
     command: mongod
+
+  graphdb:
+    image: dhlabbasel/graphdb-free
+    restart: always
+    volumes:
+      - ./graphdb:/graphdb/data
+    ports:
+      - 7200:7200
