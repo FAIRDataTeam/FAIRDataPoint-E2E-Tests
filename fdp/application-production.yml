@@ -1,8 +1,8 @@
 instance:
-  url: http://localhost:3000
+  url: http://fdp-client
 
 server:
-  port: 3000
+  port: 80
 
 repository:
   type: 4

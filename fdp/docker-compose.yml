@@ -1,17 +1,15 @@
 version: '3'
 services:
-
-  server:
-    # image: fairdata/fairdatapoint:1.0.0
+  fdp-server:
     image: fairdata/fairdatapoint:chore-improvements
     restart: always
     ports:
-      - 3000:3000
+      - 3000:80
     volumes:
       - ./application-production.yml:/fdp/application-production.yml:ro
 
   fdp-client:
-    image: fairdata/fairdatapoint-client:1.0.0
+    image: fairdata/fairdatapoint-client:feature-e2e-tests
     ports:
       - 80:80
     environment:

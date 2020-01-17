@@ -13,8 +13,11 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
+import 'cypress-plugin-retries'
+
 // Import commands.js using ES2015 syntax:
 import './commands'
+import './fdp-commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
