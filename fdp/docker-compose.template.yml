@@ -1,7 +1,7 @@
 version: '3'
 services:
   fdp-server:
-    image: fairdata/fairdatapoint:chore-improvements
+    image: {SERVER_IMAGE}
     restart: always
     ports:
       - 3000:80
@@ -9,14 +9,14 @@ services:
       - ./application-production.yml:/fdp/application-production.yml:ro
 
   fdp-client:
-    image: fairdata/fairdatapoint-client:feature-e2e-tests
+    image: {CLIENT_IMAGE}
     ports:
       - 80:80
     environment:
       - FDP_HOST=fdp-server
 
   open-refine:
-    image: fairdata/openrefine-metadata-extension:1.0.0-rc.1
+    image: {OPEN_REFINE_IMAGE}
     ports:
       - 3333:3333
 

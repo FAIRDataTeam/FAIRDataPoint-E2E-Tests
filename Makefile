@@ -6,7 +6,7 @@ install:
 
 .PHONY: init
 init:
-	cp -r fdp/graphdb-template fdp/graphdb
+	@scripts/init.sh
 
 .PHONY: start
 start:
@@ -38,7 +38,6 @@ open:
 
 .PHONY: ci
 ci:
-	make stop
 	make clean
 	make init
 	make start
