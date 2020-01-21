@@ -18,11 +18,11 @@ stop:
 
 .PHONY: run
 run:
-	@CYPRESS_RETRIES=5 $(CYPRESS) run
+	@CYPRESS_RETRIES=5 $(CYPRESS) run --record --key $(CYPRESS_RECORD_KEY)
 
 .PHONY: all
 all:
-	@make clean && make start && ($(CYPRESS) run || true) && make stop
+	@make clean && make init && make start && ($(CYPRESS) run || true) && make stop
 
 .PHONY: wait
 wait:
@@ -47,4 +47,4 @@ ci:
 
 .PHONY: clean
 clean:
-	@rm -rf output && rm -rf fdp/graphdb
+	@rm -rf output && rm -rf fdp/graphdb && rm -f fdp/docker-compose.yml
