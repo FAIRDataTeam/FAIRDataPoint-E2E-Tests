@@ -20,10 +20,6 @@ stop:
 run:
 	@CYPRESS_RETRIES=5 $(CYPRESS) run --record --key $(CYPRESS_RECORD_KEY)
 
-.PHONY: all
-all:
-	@make clean && make init && make start && ($(CYPRESS) run || true) && make stop
-
 .PHONY: wait
 wait:
 	@while ! curl http://localhost:3000/actuator/health 2>/dev/null; \
