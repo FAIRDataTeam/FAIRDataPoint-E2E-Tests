@@ -6,7 +6,7 @@ services:
     ports:
       - 3000:80
     volumes:
-      - ./application-production.yml:/fdp/application-production.yml:ro
+      - ./application.yml:/fdp/application.yml:ro
 
   fdp-client:
     image: {CLIENT_IMAGE}
