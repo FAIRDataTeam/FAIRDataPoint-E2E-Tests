@@ -27,15 +27,6 @@ When initializing the `docker-compose.yml` file, the following ENV variables can
 | CLIENT_IMAGE | `fairdata/fairdatapoint-client:develop` |
 | OPEN_REFINE_IMAGE | `fairdata/openrefine-metadata-extension:develop` |
 
-
-## Additional configuration
-
-Due to how the metadata are tight to the URL where the FDP is running, it cannot simply run on localhost. The tests are configured with FDP running on URL `fdp-client`. Therefore, you need to add the following line to `/etc/hosts`:
-
-```
-127.0.0.1	fdp-client
-```
-
 ## Running the tests
 
 Makefile contains several commands to work with the project.

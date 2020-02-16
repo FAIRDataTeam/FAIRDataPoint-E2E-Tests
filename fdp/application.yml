@@ -1,5 +1,5 @@
 instance:
-  url: http://fdp-client
+  url: http://localhost
 
 server:
   port: 80

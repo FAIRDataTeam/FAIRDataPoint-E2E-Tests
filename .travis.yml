@@ -9,8 +9,6 @@ addons:
   apt:
     packages:
       - libgconf-2-4
-  hosts:
-    - fdp-client
 
 cache:
   directories:
