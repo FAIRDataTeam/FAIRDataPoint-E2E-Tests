@@ -18,7 +18,9 @@ stop:
 
 .PHONY: run
 run:
-	@CYPRESS_RETRIES=5 $(CYPRESS) run --record --key $(CYPRESS_RECORD_KEY)
+	@CYPRESS_RETRIES=5 $(CYPRESS) run --record
+# set CYPRESS_RECORD_KEY envvar (will be automatically used)
+# see https://docs.cypress.io/guides/guides/continuous-integration.html#Environment-variables
 
 .PHONY: wait
 wait:
