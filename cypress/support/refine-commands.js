@@ -1,3 +1,5 @@
+const openrefineUrl = (url) => `${Cypress.env('open_refine_url')}${url}`
+
 Cypress.Commands.add('refineCreateProject', (name) => {
     cy.visitOpenRefine('/')
     cy.get('.create-project-ui-source-selection-tab').contains('Clipboard').click()
@@ -29,6 +31,25 @@ Cypress.Commands.add('refineCleanProjects', () => {
                 cy.get('.delete-project').first().click()
             })
         }
+    })
+})
+
+Cypress.Commands.add('refineReloadConfig', () => cy.request({
+        method: 'POST',
+        url: openrefineUrl('/command/metadata/service'),
+        body: {
+            task: 'RELOAD_CONFIG'
+        }
+    })
+)
+
+Cypress.Commands.add('refineClearConfig', () => {
+    cy.writeFile(Cypress.env('open_refine_settings'), '# empty file\n')
+})
+
+Cypress.Commands.add('refineUseSettingsConfig', (fixtureName) => {
+    cy.fixture(fixtureName).then((fixtureData) => {
+        cy.writeFile(Cypress.env('open_refine_settings'), fixtureData)
     })
 })
 

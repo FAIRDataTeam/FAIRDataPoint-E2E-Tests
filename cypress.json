@@ -13,7 +13,8 @@
     "user_first_name": "Nikola",
     "user_last_name": "Tesla",
     "mongoUrl": "mongodb://localhost:27017",
-    "mongoDBName": "fdp"
+    "mongoDBName": "fdp",
+    "open_refine_settings": "fdp/openrefine-cfg/settings.yaml"
   },
   "screenshotsFolder": "output/screenshots",
   "videosFolder": "output/videos",

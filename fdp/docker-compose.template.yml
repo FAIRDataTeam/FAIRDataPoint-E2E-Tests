@@ -19,6 +19,10 @@ services:
   open-refine:
     image: {OPEN_REFINE_IMAGE}
     network_mode: service:fdp-client
+    volumes:
+      - ./openrefine-cfg:/app/webapp/extensions/metadata/module/config:ro
+    environment: 
+      - OPENREFINE_SERVICE_TASKS=enabled
 
   mongo:
     image: mongo:4.0.12
