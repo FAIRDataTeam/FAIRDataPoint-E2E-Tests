@@ -45,11 +45,18 @@ Cypress.Commands.add('refineReloadConfig', () => cy.request({
 
 Cypress.Commands.add('refineClearConfig', () => {
     cy.writeFile(Cypress.env('open_refine_settings'), '# empty file\n')
+    cy.writeFile(Cypress.env('open_refine_storages'), '# empty file\n')
 })
 
 Cypress.Commands.add('refineUseSettingsConfig', (fixtureName) => {
     cy.fixture(fixtureName).then((fixtureData) => {
         cy.writeFile(Cypress.env('open_refine_settings'), fixtureData)
+    })
+})
+
+Cypress.Commands.add('refineUseStoragesConfig', (fixtureName) => {
+    cy.fixture(fixtureName).then((fixtureData) => {
+        cy.writeFile(Cypress.env('open_refine_storages'), fixtureData)
     })
 })
 
