@@ -1,0 +1,54 @@
+name: FAIRDataPoint E2E Tests
+
+on:
+  push:
+  repository_dispatch:
+
+jobs:
+  dsw-e2e:
+    name: Run FAIRDataPoint E2E Tests
+    runs-on: ubuntu-16.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set variables from dispatch
+      if: github.event_name == 'repository_dispatch'
+      uses: allenevans/set-env@v1.0.0
+      with:
+        SERVER_IMAGE: ${{ github.event.client_payload.server_image }}
+        CLIENT_IMAGE: ${{ github.event.client_payload.client_image }}
+        OPEN_REFINE_IMAGE: ${{ github.event.client_payload.open_refine_image }}
+
+    - name: Prepare
+      run: |
+        docker login -u "$PRIVATE_REGISTRY_USERNAME" -p "$PRIVATE_REGISTRY_PASSWORD" "$PRIVATE_REGISTRY_URL"
+        make clean
+        make init
+      env:
+        PRIVATE_REGISTRY_URL: ${{ secrets.PRIVATE_REGISTRY_URL }}
+        PRIVATE_REGISTRY_USERNAME: ${{ secrets.PRIVATE_REGISTRY_USERNAME }}
+        PRIVATE_REGISTRY_PASSWORD: ${{ secrets.PRIVATE_REGISTRY_PASSWORD }}
+
+    - name: Start FAIRDataPoint toolset
+      run: |
+        make start
+        make wait
+
+    - name: Run Cypress
+      uses: cypress-io/github-action@v1
+      with:
+        browser: chrome
+        headless: true
+        record: true
+        parallel: true
+        group: 'FDP E2E Test @ GitHub Actions'
+      env:
+        CYPRESS_RETRIES: 3
+        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
