@@ -3,7 +3,6 @@
     "client_url": "http://localhost",
     "open_refine_url": "http://localhost:3333",
     "api_url": "http://localhost",
-    "graphdb_url": "http://localhost:7200",
     "admin_username": "albert.einstein@example.com",
     "admin_password": "password",
     "admin_first_name": "Albert",

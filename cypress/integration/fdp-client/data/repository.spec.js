@@ -7,7 +7,7 @@ describe('Repository', () => {
         // fill `in the new data and save
         const newData = {
             description: 'This is a description of my repository',
-            version: '1.2.3',
+            hasVersion: '1.2.3',
             license: 'http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd4.0',
             language: 'http://id.loc.gov/vocabulary/iso639-1/de'
         }

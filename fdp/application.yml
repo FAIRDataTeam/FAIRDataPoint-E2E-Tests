@@ -4,8 +4,8 @@ instance:
 server:
   port: 80
 
-repository:
-  type: 4
-  graphDb:
-    url: http://graphdb:7200
-    repository: fdp
+# repository:
+#   type: 4
+#   graphDb:
+#     url: http://graphdb:7200
+#     repository: fdp

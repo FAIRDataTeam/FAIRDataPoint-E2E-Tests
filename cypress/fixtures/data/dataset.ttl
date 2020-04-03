@@ -15,7 +15,7 @@
 	dct:language lang:en ;
 	dct:modified "2016-10-27T10:53:09.317+02:00"^^xsd:dateTime ;
 	dct:title "Gene disease association (LUMC)"@en ;
-	a dcat:Dataset ;
+	a dcat:Dataset, dcat:Resource ;
 	rdfs:label "Gene disease association (LUMC)"@en ;
 	dcat:keyword "GDA lumc" , "text mining" , "gene-disease association" ;
 	dcat:landingPage <http://rdf.biosemantics.org/> ;

@@ -5,6 +5,7 @@
   "dependencies": {
     "cypress": "^3.4.0",
     "cypress-plugin-retries": "^1.2.0",
-    "mongodb": "^3.1.13"
+    "mongodb": "^3.1.13",
+    "rdflib": "^1.1.0"
   }
 }

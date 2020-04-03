@@ -1,6 +1,7 @@
-const apiUrl = (url) => `${Cypress.env('api_url')}${url}`
+import * as $rdf from 'rdflib'
 
-const graphDbUrl = (url) => `${Cypress.env('graphdb_url')}${url}`
+
+const apiUrl = (url) => `${Cypress.env('api_url')}${url}`
 
 const createHeaders = (token) => ({ Authorization: 'Bearer ' + token })
 
@@ -32,7 +33,6 @@ Cypress.Commands.add('loginAs', (role) => {
             url: apiUrl('/users/current'),
             headers: createHeaders(token)
         }).then((resp) => {
-            console.log(sessionKey())
             window.localStorage.setItem(sessionKey(), JSON.stringify({
                 auth: {
                     session: {
@@ -85,19 +85,29 @@ Cypress.Commands.add('getMemberships', () => {
 Cypress.Commands.add('clearCatalogs', () => {
     cy.request({
         method: 'GET',
-        url: apiUrl('/?format=json')
-    }).then((resp) => {
-        resp.body.catalogs.forEach((catalog) => {
-            cy.request({
-                method: 'POST',
-                url: graphDbUrl('/repositories/fdp/statements'),
-                form: true,
-                body: {
-                    update: `CLEAR GRAPH <${catalog.uri}>`
-                }
-            })
-        })
+        url: apiUrl('/')
     })
+        .then((resp) => {
+            getTokenFor('admin')
+                .then((tokenResp) => {
+                    const headers = createHeaders(tokenResp.body.token)
+
+                    const store = $rdf.graph()
+                    const subject = $rdf.namedNode(apiUrl(''))
+                    $rdf.parse(resp.body, store, apiUrl(''), 'text/turtle')
+
+                    const catalogs = store.match(subject, $rdf.namedNode('http://www.re3data.org/schema/3-0#dataCatalog'))
+                    catalogs.forEach((catalog) => {
+                        console.log('DELETE', catalog.object.value)
+                        cy.request({
+                            method: 'DELETE',
+                            url: catalog.object.value,
+                            headers
+                        })
+                    })
+                })
+
+        })
 })
 
 const importData = (fixtureName, fixtureMapper, postUrl) => {
@@ -113,20 +123,24 @@ const importData = (fixtureName, fixtureMapper, postUrl) => {
                 url: apiUrl(postUrl),
                 headers: {
                     ...createHeaders(resp.body.token),
-                    'Accept': 'application/json',
+                    'Accept': 'text/turtle',
                     'Content-Type': 'text/turtle'
                 },
                 body: data
             })
         })
         .then((resp) => {
-            return resp.body.identifier.uri.localName
+            const parts = resp.headers.location.split('/')
+            return parts[parts.length - 1]
         })
 }
 
 
 Cypress.Commands.add('importCatalog', (catalogFixture) => {
-    return importData(catalogFixture, f => f, '/catalog')
+    const fixtureMapper = (distribution) => distribution
+        .replace('{FDP_HOST}', Cypress.env('api_url'))
+
+    return importData(catalogFixture, fixtureMapper, '/catalog')
 })
 
 

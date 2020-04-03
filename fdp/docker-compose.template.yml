@@ -30,11 +30,3 @@ services:
     ports:
       - 27017:27017
     command: mongod
-
-  graphdb:
-    image: dhlabbasel/graphdb-free
-    restart: always
-    volumes:
-      - ./graphdb:/graphdb/data
-    ports:
-      - 7200:7200

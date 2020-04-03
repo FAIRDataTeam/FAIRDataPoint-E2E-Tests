@@ -1,9 +1,5 @@
 #!/bin/sh
 
-# Init GraphDB
-cp -r fdp/graphdb-template fdp/graphdb
-
-
 # Init docker-compose file
 SERVER_IMAGE="${SERVER_IMAGE:-fairdata/fairdatapoint:develop}"
 CLIENT_IMAGE="${CLIENT_IMAGE:-fairdata/fairdatapoint-client:develop}"

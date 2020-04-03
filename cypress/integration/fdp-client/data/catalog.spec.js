@@ -71,7 +71,7 @@ describe('Catalog', () => {
         const newData = {
             title: 'My Catalog',
             description: 'This is a description of my catalog',
-            version: '1.2.3',
+            hasVersion: '1.2.3',
             license: 'http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd4.0',
             language: 'http://id.loc.gov/vocabulary/iso639-1/de'
         }
