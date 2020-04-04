@@ -32,12 +32,12 @@ describe('Distribution', () => {
         })
     })
 
-    it('displays distribution', () => {
+    it('view list', () => {
         cy.visitClient(`/dataset/${datasetUuid}`)
         cy.get('[data-cy=distributions] [data-cy=item]').contains(distributionName)
     })
 
-    it('display distribution detail', () => {
+    it('view detail', () => {
         cy.visitClient(`/distribution/${distributionUuid}`)
 
         // check breadcrumbs
@@ -50,7 +50,7 @@ describe('Distribution', () => {
         cy.get('h1').contains(distributionName)
     })
 
-    it('can add user as Owner', () => {
+    it('add user as Owner', () => {
         // login as admin and navigate to settings
         cy.loginAs('admin')
         cy.visitClient(`/distribution/${distributionUuid}`)
@@ -70,7 +70,7 @@ describe('Distribution', () => {
         cy.getCy('membership-badge').contains('Owner')
     })
 
-    it('can edit', () => {
+    it('edit', () => {
         // login as admin and edit the distribution
         cy.loginAs('admin')
         cy.visitClient(`/distribution/${distributionUuid}`)
@@ -91,5 +91,40 @@ describe('Distribution', () => {
         // open edit again and check the values
         cy.getCy('edit').click()
         cy.checkFields(newData)
+    })
+
+    it('create', () => {
+        cy.loginAs('admin')
+        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.getCy('create').click()
+
+        cy.url().should('include', 'create-distribution')
+        const data = {
+            title: 'My test distribution',
+            description: 'This is a description of my test distribution',
+            hasVersion: 'v2',
+            license: 'http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd4.0',
+            language: 'http://id.loc.gov/vocabulary/iso639-1/de',
+            mediaType: 'application/json'
+        }
+        cy.fillFields(data)
+        cy.getCy('save').click()
+        cy.url().should('not.contain', 'create-distribution')
+
+        cy.get('h1').contains(data.title).should('exist')
+        cy.get('.description').contains(data.description).should('exist')
+        cy.get('.entity-metadata__item').contains('cc-by-nc-nd4.0').should('have.attr', 'href', data.license)
+        cy.get('.entity-metadata__item').contains('de').should('have.attr', 'href', data.language)
+        cy.get('.entity-metadata__item').contains(data.hasVersion).should('exist')
+        cy.get('.entity-metadata__item').contains(data.mediaType).should('exist')
+    })
+
+    it('delete', () => {
+        cy.loginAs('admin')
+        cy.visitClient(`/distribution/${distributionUuid}`)
+        cy.getCy('delete').click()
+
+        cy.url().should('include', `/dataset/${datasetUuid}`)
+        cy.get('.item-list__empty').contains('There are no distributions.').should('exist')
     })
 })

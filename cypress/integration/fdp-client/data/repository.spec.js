@@ -1,5 +1,5 @@
 describe('Repository', () => {
-    it('can edit', () => {
+    it('edit', () => {
         cy.loginAs('admin')
         cy.visitClient('/')
         cy.getCy('edit').click()

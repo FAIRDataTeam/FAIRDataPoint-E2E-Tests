@@ -22,12 +22,12 @@ describe('Catalog', () => {
         })
     })
 
-    it('displays catalog', () => {
+    it('view list', () => {
         cy.visitClient('/')
         cy.get('[data-cy=catalogs] [data-cy=item]').contains(catalogName)
     })
 
-    it('displays catalog detail', () => {
+    it('view detail', () => {
         cy.visitClient(`/catalog/${catalogUuid}`)
 
         // check breadcrumbs
@@ -40,7 +40,7 @@ describe('Catalog', () => {
 
     const roles = ['Owner', 'Data Provider']
     roles.forEach((role) => {
-        it(`can add user as ${role}`, () => {
+        it(`add user as ${role}`, () => {
             // login as admin and navigate to settings
             cy.loginAs('admin')
             cy.visitClient(`/catalog/${catalogUuid}`)
@@ -61,7 +61,7 @@ describe('Catalog', () => {
         })
     })
 
-    it('can edit', () => {
+    it('edit', () => {
         // login as admin and edit the catalog
         cy.loginAs('admin')
         cy.visitClient(`/catalog/${catalogUuid}`)
@@ -82,5 +82,38 @@ describe('Catalog', () => {
         // open edit again and check the values
         cy.getCy('edit').click()
         cy.checkFields(newData)
+    })
+
+    it('create', () => {
+        cy.loginAs('user')
+        cy.visitClient('/')
+        cy.getCy('create').click()
+
+        cy.url().should('include', 'create-catalog')
+        const data = {
+            title: 'My test catalog',
+            description: 'This is a description of my test catalog',
+            hasVersion: 'v2',
+            license: 'http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd4.0',
+            language: 'http://id.loc.gov/vocabulary/iso639-1/de'
+        }
+        cy.fillFields(data)
+        cy.getCy('save').click()
+        cy.url().should('not.contain', 'create-catalog')
+
+        cy.get('h1').contains(data.title).should('exist')
+        cy.get('.description').contains(data.description).should('exist')
+        cy.get('.entity-metadata__item').contains('cc-by-nc-nd4.0').should('have.attr', 'href', data.license)
+        cy.get('.entity-metadata__item').contains('de').should('have.attr', 'href', data.language)
+        cy.get('.entity-metadata__item').contains(data.hasVersion).should('exist')
+    })
+
+    it('delete', () => {
+        cy.loginAs('admin')
+        cy.visitClient(`/catalog/${catalogUuid}`)
+        cy.getCy('delete').click()
+
+        cy.url().should('eq', `${Cypress.env('client_url')}/`)
+        cy.get('.item-list__empty').contains('There are no catalogs.').should('exist')
     })
 })

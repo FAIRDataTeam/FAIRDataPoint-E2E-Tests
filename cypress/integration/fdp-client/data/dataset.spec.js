@@ -28,12 +28,12 @@ describe('Dataset', () => {
         })
     })
 
-    it('displays dataset', () => {
+    it('view list', () => {
         cy.visitClient(`/catalog/${catalogUuid}`)
         cy.get('[data-cy=datasets] [data-cy=item]').contains(datasetName)
     })
 
-    it('displays dataset detail', () => {
+    it('view detail', () => {
         cy.visitClient(`/dataset/${datasetUuid}`)
 
         // check breadcrumbs
@@ -45,7 +45,7 @@ describe('Dataset', () => {
         cy.get('h1').contains(datasetName)
     })
 
-    it(`can add user as Owner`, () => {
+    it('add user as Owner', () => {
         // login as admin and navigate to settings
         cy.loginAs('admin')
         cy.visitClient(`/dataset/${datasetUuid}`)
@@ -65,7 +65,7 @@ describe('Dataset', () => {
         cy.getCy('membership-badge').contains('Owner')
     })
 
-    it('can edit', () => {
+    it('edit', () => {
         // login as admin and edit the dataset
         cy.loginAs('admin')
         cy.visitClient(`/dataset/${datasetUuid}`)
@@ -86,5 +86,38 @@ describe('Dataset', () => {
         // open edit again and check the values
         cy.getCy('edit').click()
         cy.checkFields(newData)
+    })
+
+    it('create', () => {
+        cy.loginAs('admin')
+        cy.visitClient(`/catalog/${catalogUuid}`)
+        cy.getCy('create').click()
+
+        cy.url().should('include', 'create-dataset')
+        const data = {
+            title: 'My test dataset',
+            description: 'This is a description of my test dataset',
+            hasVersion: 'v2',
+            license: 'http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd4.0',
+            language: 'http://id.loc.gov/vocabulary/iso639-1/de'
+        }
+        cy.fillFields(data)
+        cy.getCy('save').click()
+        cy.url().should('not.contain', 'create-dataset')
+
+        cy.get('h1').contains(data.title).should('exist')
+        cy.get('.description').contains(data.description).should('exist')
+        cy.get('.entity-metadata__item').contains('cc-by-nc-nd4.0').should('have.attr', 'href', data.license)
+        cy.get('.entity-metadata__item').contains('de').should('have.attr', 'href', data.language)
+        cy.get('.entity-metadata__item').contains(data.hasVersion).should('exist')
+    })
+
+    it('delete', () => {
+        cy.loginAs('admin')
+        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.getCy('delete').click()
+
+        cy.url().should('include', `/catalog/${catalogUuid}`)
+        cy.get('.item-list__empty').contains('There are no datasets.').should('exist')
     })
 })
