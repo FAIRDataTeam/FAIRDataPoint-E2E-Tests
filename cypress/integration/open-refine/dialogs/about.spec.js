@@ -1,4 +1,4 @@
-describe('OpenRefine-ext: About dialog', () => {
+describe.skip('OpenRefine-ext: About dialog', () => {
     const projectName = 'Cypress about-dialog test'
     const menuTitle = 'About extension'
     const dialogTitle = 'About metadata extension'
