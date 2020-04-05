@@ -1,4 +1,4 @@
-describe.skip('OpenRefine-ext: Metadata Create', () => {
+describe('OpenRefine-ext: Metadata Create', () => {
     const projectName = 'Cypress metadata-create test'
     const dialogTitle = 'Create metadata in FAIR Data Point'
     const fdpUri = Cypress.env('api_url')
