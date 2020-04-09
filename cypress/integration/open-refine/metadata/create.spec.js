@@ -80,7 +80,7 @@ describe('OpenRefine-ext: Metadata Create', () => {
     }
 
     before(() => {
-        cy.refineCleanProjects()
+        cy.refineCleanup()
         cy.refineCreateProject(projectName)
     })
 

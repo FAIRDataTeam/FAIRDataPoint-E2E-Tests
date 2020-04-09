@@ -34,6 +34,12 @@ Cypress.Commands.add('refineCleanProjects', () => {
     })
 })
 
+Cypress.Commands.add('refineCleanup', () => {
+    cy.refineCleanProjects()
+    cy.refineClearConfig()
+    cy.refineReloadConfig()
+})
+
 Cypress.Commands.add('refineReloadConfig', () => cy.request({
         method: 'POST',
         url: openrefineUrl('/command/metadata/service'),

@@ -4,7 +4,7 @@ describe('OpenRefine-ext: About dialog', () => {
     const dialogTitle = 'About metadata extension'
 
     before(() => {
-        cy.refineCleanProjects()
+        cy.refineCleanup()
         cy.refineCreateProject(projectName)
     })
 

@@ -3,7 +3,7 @@ describe('OpenRefine-ext: Store data dialog', () => {
     const dialogTitle = 'Store data to FAIR storage'
 
     before(() => {
-        cy.refineCleanProjects()
+        cy.refineCleanup()
         cy.refineCreateProject(projectName)
     })
 

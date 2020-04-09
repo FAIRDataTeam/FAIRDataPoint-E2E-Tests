@@ -3,7 +3,7 @@ describe('OpenRefine-ext: Settings - prefill metadata', () => {
     const dialogTitle = 'Create metadata in FAIR Data Point'
 
     before(() => {
-        cy.refineCleanProjects()
+        cy.refineCleanup()
         cy.refineCreateProject(projectName)
     })
 

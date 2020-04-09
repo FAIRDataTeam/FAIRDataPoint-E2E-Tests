@@ -9,7 +9,7 @@ describe('OpenRefine-ext: Metadata Display', () => {
     let datasetUuid = null
 
     before(() => {
-        cy.refineCleanProjects()
+        cy.refineCleanup()
         cy.refineCreateProject(projectName)
     })
 

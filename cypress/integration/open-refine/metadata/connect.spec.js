@@ -6,7 +6,7 @@ describe('OpenRefine-ext: FDP Connection', () => {
     const roles = [{ name: 'admin' }, { name: 'user' }]
 
     before(() => {
-        cy.refineCleanProjects()
+        cy.refineCleanup()
         cy.refineCreateProject(projectName)
     })
 
