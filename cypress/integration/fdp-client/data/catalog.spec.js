@@ -24,7 +24,7 @@ describe('Catalog', () => {
 
     it('view list', () => {
         cy.visitClient('/')
-        cy.get('[data-cy=catalogs] [data-cy=item]').contains(catalogName)
+        cy.get('[data-cy=item-list] [data-cy=item]').contains(catalogName)
     })
 
     it('view detail', () => {

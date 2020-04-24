@@ -34,7 +34,7 @@ describe('Distribution', () => {
 
     it('view list', () => {
         cy.visitClient(`/dataset/${datasetUuid}`)
-        cy.get('[data-cy=distributions] [data-cy=item]').contains(distributionName)
+        cy.get('[data-cy=item-list] [data-cy=item]').contains(distributionName)
     })
 
     it('view detail', () => {
@@ -126,5 +126,45 @@ describe('Distribution', () => {
 
         cy.url().should('include', `/dataset/${datasetUuid}`)
         cy.get('.item-list__empty').contains('There are no distributions.').should('exist')
+    })
+
+    it('create with access URL', () => {
+        cy.loginAs('admin')
+        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.getCy('create').click()
+
+        cy.url().should('include', 'create-distribution')
+        const accessURL = 'http://example.com/access-online'
+        const data = {
+            title: 'My test distribution',
+            hasVersion: 'v2',
+            mediaType: 'application/json',
+            accessURL
+        }
+        cy.fillFields(data)
+        cy.getCy('save').click()
+        cy.url().should('not.contain', 'create-distribution')
+
+        cy.get('a.btn').contains('Access online').should('have.attr', 'href', accessURL)
+    })
+
+    it('create with download URL', () => {
+        cy.loginAs('admin')
+        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.getCy('create').click()
+
+        cy.url().should('include', 'create-distribution')
+        const downloadURL = 'http://example.com/download'
+        const data = {
+            title: 'My test distribution',
+            hasVersion: 'v2',
+            mediaType: 'application/json',
+            downloadURL
+        }
+        cy.fillFields(data)
+        cy.getCy('save').click()
+        cy.url().should('not.contain', 'create-distribution')
+
+        cy.get('a.btn').contains('Download').should('have.attr', 'href', downloadURL)
     })
 })

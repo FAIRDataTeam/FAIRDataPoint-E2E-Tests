@@ -30,7 +30,7 @@ describe('Dataset', () => {
 
     it('view list', () => {
         cy.visitClient(`/catalog/${catalogUuid}`)
-        cy.get('[data-cy=datasets] [data-cy=item]').contains(datasetName)
+        cy.get('[data-cy=item-list] [data-cy=item]').contains(datasetName)
     })
 
     it('view detail', () => {
