@@ -1,11 +1,6 @@
 instance:
-  url: http://localhost
+  clientUrl: http://localhost
+  persistentUrl: http://example.com/fdp/e2e
 
 server:
   port: 80
-
-# repository:
-#   type: 4
-#   graphDb:
-#     url: http://graphdb:7200
-#     repository: fdp

@@ -92,16 +92,20 @@ Cypress.Commands.add('clearCatalogs', () => {
                 .then((tokenResp) => {
                     const headers = createHeaders(tokenResp.body.token)
 
+                    const apiUrl = Cypress.env('api_url')
+                    const persistentUrl = Cypress.env('persistent_url')
+
                     const store = $rdf.graph()
-                    const subject = $rdf.namedNode(apiUrl(''))
-                    $rdf.parse(resp.body, store, apiUrl(''), 'text/turtle')
+                    const subject = $rdf.namedNode(persistentUrl)
+                    $rdf.parse(resp.body, store, persistentUrl, 'text/turtle')
 
                     const catalogs = store.match(subject, $rdf.namedNode('http://www.re3data.org/schema/3-0#dataCatalog'))
                     catalogs.forEach((catalog) => {
-                        console.log('DELETE', catalog.object.value)
+                        const url = catalog.object.value.replace(persistentUrl, apiUrl)
+
                         cy.request({
                             method: 'DELETE',
-                            url: catalog.object.value,
+                            url,
                             headers
                         })
                     })
@@ -138,7 +142,7 @@ const importData = (fixtureName, fixtureMapper, postUrl) => {
 
 Cypress.Commands.add('importCatalog', (catalogFixture) => {
     const fixtureMapper = (distribution) => distribution
-        .replace('{FDP_HOST}', Cypress.env('api_url'))
+        .replace('{FDP_HOST}', Cypress.env('persistent_url'))
 
     return importData(catalogFixture, fixtureMapper, '/catalog')
 })
@@ -146,7 +150,7 @@ Cypress.Commands.add('importCatalog', (catalogFixture) => {
 
 Cypress.Commands.add('importDataset', (datasetFixture, catalogId) => {
     const fixtureMapper = (dataset) => dataset
-        .replace('{FDP_HOST}', Cypress.env('api_url'))
+        .replace('{FDP_HOST}', Cypress.env('persistent_url'))
         .replace('{CATALOG_ID}', catalogId)
 
     return importData(datasetFixture, fixtureMapper, '/dataset')
@@ -155,7 +159,7 @@ Cypress.Commands.add('importDataset', (datasetFixture, catalogId) => {
 
 Cypress.Commands.add('importDistribution', (distributionFixture, datasetId) => {
     const fixtureMapper = (distribution) => distribution
-        .replace('{FDP_HOST}', Cypress.env('api_url'))
+        .replace('{FDP_HOST}', Cypress.env('persistent_url'))
         .replace('{DATASET_ID}', datasetId)
 
     return importData(distributionFixture, fixtureMapper, '/distribution')

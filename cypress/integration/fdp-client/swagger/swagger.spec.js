@@ -4,7 +4,7 @@ describe('Swagger', () => {
         cy.get('h2.title').contains('FAIR Data Point API')
 
         cy.get('a').contains('config-controller').click()
-        cy.get('#operations-config-controller-getDashboardUsingGET').click()
+        cy.get('#operations-config-controller-getBootstrapConfigUsingGET').click()
         cy.get('.btn').contains('Try it out').click()
         cy.get('.btn').contains('Execute').click()
         cy.get('h4')

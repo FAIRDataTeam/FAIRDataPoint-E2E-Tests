@@ -1,4 +1,4 @@
-describe('OpenRefine-ext: Create metadata dialog', () => {
+describe.skip('OpenRefine-ext: Create metadata dialog', () => {
     const projectName = 'Cypress metadata-dialog test'
     const dialogTitle = 'Create metadata in FAIR Data Point'
 
