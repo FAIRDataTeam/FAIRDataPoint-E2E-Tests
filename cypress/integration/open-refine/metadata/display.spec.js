@@ -1,7 +1,8 @@
-describe.skip('OpenRefine-ext: Metadata Display', () => {
+describe('OpenRefine-ext: Metadata Display', () => {
     const projectName = 'Cypress metadata-display test'
     const dialogTitle = 'Create metadata in FAIR Data Point'
     const fdpUri = Cypress.env('api_url')
+    const persistentUrl = Cypress.env('persistent_url')
     const catalogName = 'Catalog for textmining datasets'
     const datasetName = 'Gene disease association (LUMC)'
     const distributionName = 'GDA lumc SPARQL endpoint'
@@ -36,12 +37,12 @@ describe.skip('OpenRefine-ext: Metadata Display', () => {
         cy.refineGetBind('datasetLayer').should('not.be.visible')
         cy.refineGetBind('distributionLayer').should('not.be.visible')
 
-        cy.refineGetBind('catalogSelect').select(catalogName).should('have.value', `${fdpUri}/catalog/${catalogUuid}`)
+        cy.refineGetBind('catalogSelect').select(catalogName).should('have.value', `${persistentUrl}/catalog/${catalogUuid}`)
         cy.refineGetBind('catalogLayer').should('be.visible')
         cy.refineGetBind('datasetLayer').should('be.visible')
         cy.refineGetBind('distributionLayer').should('not.be.visible')
 
-        cy.refineGetBind('datasetSelect').select(datasetName).should('have.value', `${fdpUri}/dataset/${datasetUuid}`)
+        cy.refineGetBind('datasetSelect').select(datasetName).should('have.value', `${persistentUrl}/dataset/${datasetUuid}`)
         cy.refineGetBind('catalogLayer').should('be.visible')
         cy.refineGetBind('datasetLayer').should('be.visible')
         cy.refineGetBind('distributionLayer').should('be.visible')

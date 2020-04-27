@@ -1,4 +1,4 @@
-describe.skip('OpenRefine-ext: Storages config', () => {
+describe('OpenRefine-ext: Storages config', () => {
     const projectName = 'Cypress storage test'
     const dialogTitle = 'Store data to FAIR storage'
 

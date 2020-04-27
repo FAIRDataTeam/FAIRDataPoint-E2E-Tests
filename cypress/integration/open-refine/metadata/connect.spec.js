@@ -1,4 +1,4 @@
-describe.skip('OpenRefine-ext: FDP Connection', () => {
+describe('OpenRefine-ext: FDP Connection', () => {
     const projectName = 'Cypress fdp-connect test'
     const dialogTitle = 'Create metadata in FAIR Data Point'
     const repositoryName = 'My FAIR Data Point'
