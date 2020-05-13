@@ -135,6 +135,7 @@ const importData = (fixtureName, fixtureMapper, postUrl) => {
         })
         .then((resp) => {
             const parts = resp.headers.location.split('/')
+            console.log(parts)
             return parts[parts.length - 1]
         })
 }

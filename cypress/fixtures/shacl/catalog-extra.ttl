@@ -1,0 +1,35 @@
+@prefix : <http://fairdatapoint.org/> .
+@prefix ex: <http://example.com/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+
+:CatalogExtraShape a sh:NodeShape ;
+  sh:targetClass dcat:Catalog ;
+  sh:property [
+    sh:path ex:hasAnimal ;
+    sh:node :AnimalShape ;
+    dash:editor dash:BlankNodeEditor ;
+  ], [
+    sh:path ex:extraUrl ;
+    sh:nodeKind sh:IRI ;
+    sh:maxCount 1 ;
+    dash:editor dash:URIEditor ;
+    dash:viewer dash:LabelViewer ;
+  ] .
+  
+:AnimalShape a sh:NodeShape ;
+  sh:targetClass ex:Animal ;
+  sh:property [
+    sh:path ex:animalName ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    dash:editor dash:TextFieldEditor ;
+  ], [
+    sh:path ex:animalUrl ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    dash:editor dash:TextFieldEditor ;
+  ] .

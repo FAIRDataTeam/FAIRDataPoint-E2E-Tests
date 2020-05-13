@@ -1,0 +1,23 @@
+@prefix :     <http://fairdatapoint.org/> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix ex:   <http://example.org/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+
+
+:DatasetExtraShape a sh:NodeShape ;
+  sh:targetClass dcat:Dataset ;
+  sh:property [
+      sh:path ex:extraUrl ;
+      sh:nodeKind sh:IRI ;
+      sh:maxCount 1 ;
+      dash:editor dash:URIEditor ;
+      dash:viewer dash:LabelViewer ;
+    ],
+    [
+      sh:path ex:extraLiteral ;
+      sh:nodeKind sh:Literal ;
+      sh:maxCount 1 ;
+      dash:editor dash:TextFieldEditor ;
+      dash:viewer dash:LiteralViewer ;
+    ] .

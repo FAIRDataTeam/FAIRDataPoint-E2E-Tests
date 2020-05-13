@@ -1,0 +1,23 @@
+@prefix :     <http://fairdatapoint.org/> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix ex:   <http://example.org/> .
+@prefix r3d:  <http://www.re3data.org/schema/3-0#> .
+
+
+:RepositoryExtraShape a sh:NodeShape ;
+  sh:targetClass r3d:Repository ;
+  sh:property [
+      sh:path ex:extraUrl ;
+      sh:nodeKind sh:IRI ;
+      sh:maxCount 1 ;
+      dash:editor dash:URIEditor ;
+      dash:viewer dash:LabelViewer ;
+    ],
+    [
+      sh:path ex:extraLiteral ;
+      sh:nodeKind sh:Literal ;
+      sh:maxCount 1 ;
+      dash:editor dash:TextFieldEditor ;
+      dash:viewer dash:LiteralViewer ;
+    ] .
