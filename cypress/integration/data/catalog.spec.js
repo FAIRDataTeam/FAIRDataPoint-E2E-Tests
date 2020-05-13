@@ -22,7 +22,7 @@ describe('Catalog', () => {
         })
     })
 
-    it('view list', () => {
+    it.only('view list', () => {
         cy.visitClient('/')
         cy.get('[data-cy=item-list] [data-cy=item]').contains(catalogName)
     })
