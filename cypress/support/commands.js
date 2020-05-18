@@ -11,7 +11,7 @@ Cypress.Commands.add('visitOpenRefine', (url) => {
 // Selection commands
 
 Cypress.Commands.add('getCy', (key) => {
-    return cy.get(`[data-cy=${key}]`)
+    return cy.get(`[data-cy="${key}"]`)
 })
 
 

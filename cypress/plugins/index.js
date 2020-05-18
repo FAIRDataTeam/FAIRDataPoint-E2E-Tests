@@ -39,16 +39,17 @@ module.exports = (on, config) => {
     'mongo:find': ({ collection, args}) => withMongoDB(config, db => {
       return db.collection(collection).find(args).toArray()
     }),
-    'mongo:findOne': ({collection, args}) => withMongoDB(config, db => {
+    'mongo:findOne': ({ collection, args }) => withMongoDB(config, db => {
       return db.collection(collection).findOne(args)
     }),
     'mongo:delete': ({ collection, args }) => withMongoDB(config, db => {
-      const ret = db.collection(collection).deleteMany(args)
-      console.log(ret)
-      return ret
+      return db.collection(collection).deleteMany(args)
     }),
-    'mongo:updateOne': ({collection, query, update}) => withMongoDB(config, db => {
+    'mongo:updateOne': ({ collection, query, update }) => withMongoDB(config, db => {
       return db.collection(collection).updateOne(query, update)
+    }),
+    'mongo:insert': ({ collection, objects }) => withMongoDB(config, db => {
+      return db.collection(collection).insertMany(objects)
     })
   })
 }

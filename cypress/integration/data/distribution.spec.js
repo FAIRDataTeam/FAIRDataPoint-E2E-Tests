@@ -105,7 +105,8 @@ describe('Distribution', () => {
             hasVersion: 'v2',
             license: 'http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd4.0',
             language: 'http://id.loc.gov/vocabulary/iso639-1/de',
-            mediaType: 'application/json'
+            mediaType: 'application/json',
+            name: 'Publisher Name'
         }
         cy.fillFields(data)
         cy.getCy('save').click()
@@ -139,6 +140,7 @@ describe('Distribution', () => {
             title: 'My test distribution',
             hasVersion: 'v2',
             mediaType: 'application/json',
+            name: 'Publisher Name',
             accessURL
         }
         cy.fillFields(data)
@@ -159,6 +161,7 @@ describe('Distribution', () => {
             title: 'My test distribution',
             hasVersion: 'v2',
             mediaType: 'application/json',
+            name: 'Publisher Name',
             downloadURL
         }
         cy.fillFields(data)

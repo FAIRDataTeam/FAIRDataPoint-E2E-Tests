@@ -99,7 +99,9 @@ describe('Dataset', () => {
             description: 'This is a description of my test dataset',
             hasVersion: 'v2',
             license: 'http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd4.0',
-            language: 'http://id.loc.gov/vocabulary/iso639-1/de'
+            language: 'http://id.loc.gov/vocabulary/iso639-1/de',
+            name: 'Publisher Name',
+            theme: 'http://example.com/theme'
         }
         cy.fillFields(data)
         cy.getCy('save').click()

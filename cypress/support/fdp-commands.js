@@ -49,6 +49,38 @@ Cypress.Commands.add('logout', () => {
     window.localStorage.removeItem(sessionKey())
 })
 
+// Configuration
+
+Cypress.Commands.add('getBootstrapConfig', () => {
+    return cy.request({
+        method: 'GET',
+        url: apiUrl('/configs/bootstrap')
+    }).then(resp => resp.body)
+})
+
+Cypress.Commands.add('putResourceDefinition', (definition) => {
+    getTokenFor('admin')
+        .then((resp) => {
+            return cy.request({
+                method: 'PUT',
+                url: apiUrl(`/resource-definitions/${definition.uuid}`),
+                headers: createHeaders(resp.body.token),
+                body: definition
+            })
+        })
+})
+
+Cypress.Commands.add('deleteResourceDefinition', (uuid) => {
+    getTokenFor('admin')
+        .then((resp) => {
+            return cy.request({
+                method: 'DELETE',
+                url: apiUrl(`/resource-definitions/${uuid}`),
+                headers: createHeaders(resp.body.token),
+            })
+        })
+})
+
 // Users 
 
 Cypress.Commands.add('createUser', (user) => {
@@ -135,7 +167,6 @@ const importData = (fixtureName, fixtureMapper, postUrl) => {
         })
         .then((resp) => {
             const parts = resp.headers.location.split('/')
-            console.log(parts)
             return parts[parts.length - 1]
         })
 }
