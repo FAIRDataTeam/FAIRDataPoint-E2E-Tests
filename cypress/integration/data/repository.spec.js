@@ -19,4 +19,17 @@ describe('Repository', () => {
         cy.getCy('edit').click()
         cy.checkFields(newData)
     })
+
+    const formats = ['ttl', 'rdf', 'jsonld']
+    formats.forEach((format) => {
+        it(`download RDF (${format})`, () => {
+            const url = ''
+            const purl = `${Cypress.env('persistent_url')}${url}`
+
+            cy.downloadRDF(url, format).then((respBody) => {
+                expect(respBody).to.contain(purl)
+                expect(respBody).to.contain('My FAIR Data Point')
+            })
+        })
+    })
 })

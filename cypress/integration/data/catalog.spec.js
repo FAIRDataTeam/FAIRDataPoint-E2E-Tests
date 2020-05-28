@@ -117,4 +117,17 @@ describe('Catalog', () => {
         cy.url().should('eq', `${Cypress.env('client_url')}/`)
         cy.get('.item-list__empty').contains('There are no catalogs.').should('exist')
     })
+
+    const formats = ['ttl', 'rdf', 'jsonld']
+    formats.forEach((format) => {
+        it(`download RDF (${format})`, () => {
+            const url = `/catalog/${catalogUuid}`
+            const purl = `${Cypress.env('persistent_url')}${url}`
+
+            cy.downloadRDF(url, format).then((respBody) => {
+                expect(respBody).to.contain(purl)
+                expect(respBody).to.contain(catalogName)
+            })
+        })
+    })
 })

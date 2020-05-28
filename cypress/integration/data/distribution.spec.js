@@ -170,4 +170,17 @@ describe('Distribution', () => {
 
         cy.get('a.btn').contains('Download').should('have.attr', 'href', downloadURL)
     })
+
+    const formats = ['ttl', 'rdf', 'jsonld']
+    formats.forEach((format) => {
+        it(`download RDF (${format})`, () => {
+            const url = `/distribution/${distributionUuid}`
+            const purl = `${Cypress.env('persistent_url')}${url}`
+
+            cy.downloadRDF(url, format).then((respBody) => {
+                expect(respBody).to.contain(purl)
+                expect(respBody).to.contain(distributionName)
+            })
+        })
+    })
 })

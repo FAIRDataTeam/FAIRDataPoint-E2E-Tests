@@ -146,6 +146,8 @@ Cypress.Commands.add('clearCatalogs', () => {
         })
 })
 
+// Import data
+
 const importData = (fixtureName, fixtureMapper, postUrl) => {
     let data = null
     return cy.fixture(fixtureName)
@@ -195,4 +197,19 @@ Cypress.Commands.add('importDistribution', (distributionFixture, datasetId) => {
         .replace('{DATASET_ID}', datasetId)
 
     return importData(distributionFixture, fixtureMapper, '/distribution')
+})
+
+
+// Download RDF
+
+Cypress.Commands.add('downloadRDF', (url, format) => {
+    return cy.request({
+        method: 'GET',
+        url: apiUrl(`${url}?format=${format}`)
+    }).then((resp) => {
+        if (Array.isArray(resp.body)) {
+            return JSON.stringify(resp.body)
+        }
+        return resp.body
+    })
 })

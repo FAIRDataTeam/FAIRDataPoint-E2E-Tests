@@ -122,4 +122,17 @@ describe('Dataset', () => {
         cy.url().should('include', `/catalog/${catalogUuid}`)
         cy.get('.item-list__empty').contains('There are no datasets.').should('exist')
     })
+
+    const formats = ['ttl', 'rdf', 'jsonld']
+    formats.forEach((format) => {
+        it(`download RDF (${format})`, () => {
+            const url = `/dataset/${datasetUuid}`
+            const purl = `${Cypress.env('persistent_url')}${url}`
+
+            cy.downloadRDF(url, format).then((respBody) => {
+                expect(respBody).to.contain(purl)
+                expect(respBody).to.contain(datasetName)
+            })
+        })
+    })
 })
