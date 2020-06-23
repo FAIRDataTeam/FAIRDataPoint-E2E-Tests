@@ -150,17 +150,21 @@ Cypress.Commands.add('clearCatalogs', () => {
 
 const importData = (fixtureName, fixtureMapper, postUrl) => {
     let data = null
+    let uuid = null
+    let headers = null
     return cy.fixture(fixtureName)
         .then((fixtureData) => {
             data = fixtureMapper(fixtureData)
             return getTokenFor('admin')
         })
         .then((resp) => {
+            headers = createHeaders(resp.body.token)
+
             return cy.request({
                 method: 'POST',
                 url: apiUrl(postUrl),
                 headers: {
-                    ...createHeaders(resp.body.token),
+                    ...headers,
                     'Accept': 'text/turtle',
                     'Content-Type': 'text/turtle'
                 },
@@ -169,7 +173,21 @@ const importData = (fixtureName, fixtureMapper, postUrl) => {
         })
         .then((resp) => {
             const parts = resp.headers.location.split('/')
-            return parts[parts.length - 1]
+            uuid = parts[parts.length - 1]
+
+            return cy.request({
+                method: 'PUT',
+                url: `${apiUrl(postUrl)}/${uuid}/meta/state`,
+                headers: {
+                    ...headers,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: { current: "PUBLISHED" }
+            })
+        })
+        .then(() => {
+            return uuid
         })
 }
 
