@@ -115,34 +115,36 @@ Cypress.Commands.add('getMemberships', () => {
 // Catalogs
 
 Cypress.Commands.add('clearCatalogs', () => {
-    cy.request({
-        method: 'GET',
-        url: apiUrl('/')
-    })
+    let headers = null
+
+    getTokenFor('admin')
         .then((resp) => {
-            getTokenFor('admin')
-                .then((tokenResp) => {
-                    const headers = createHeaders(tokenResp.body.token)
+            headers = createHeaders(resp.body.token)
+        })
+        .then(() => {
+            cy.request({
+                headers,
+                method: 'GET',
+                url: apiUrl('/')
+            })
+        })
+        .then((resp) => {
+            const apiUrl = Cypress.env('api_url')
+            const persistentUrl = Cypress.env('persistent_url')
 
-                    const apiUrl = Cypress.env('api_url')
-                    const persistentUrl = Cypress.env('persistent_url')
+            const store = $rdf.graph()
+            const subject = $rdf.namedNode(persistentUrl)
+            $rdf.parse(resp.body, store, persistentUrl, 'text/turtle')
 
-                    const store = $rdf.graph()
-                    const subject = $rdf.namedNode(persistentUrl)
-                    $rdf.parse(resp.body, store, persistentUrl, 'text/turtle')
-
-                    const catalogs = store.match(subject, $rdf.namedNode('http://www.re3data.org/schema/3-0#dataCatalog'))
-                    catalogs.forEach((catalog) => {
-                        const url = catalog.object.value.replace(persistentUrl, apiUrl)
-
-                        cy.request({
-                            method: 'DELETE',
-                            url,
-                            headers
-                        })
-                    })
+            const catalogs = store.match(subject, $rdf.namedNode('http://www.re3data.org/schema/3-0#dataCatalog'))
+            catalogs.forEach((catalog) => {
+                const url = catalog.object.value.replace(persistentUrl, apiUrl)
+                cy.request({
+                    method: 'DELETE',
+                    url,
+                    headers
                 })
-
+            })
         })
 })
 
