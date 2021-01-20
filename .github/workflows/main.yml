@@ -19,7 +19,7 @@ jobs:
 
     - name: Set variables from dispatch
       if: github.event_name == 'repository_dispatch'
-      uses: allenevans/set-env@v1.0.0
+      uses: allenevans/set-env@v2.0.0
       with:
         SERVER_IMAGE: ${{ github.event.client_payload.server_image }}
         CLIENT_IMAGE: ${{ github.event.client_payload.client_image }}
