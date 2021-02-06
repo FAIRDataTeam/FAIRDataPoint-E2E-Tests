@@ -3,6 +3,16 @@ name: FAIRDataPoint E2E Tests
 on:
   push:
   repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      server_image:
+        description: 'FDP image'
+        required: false
+        default: 'fairdata/fairdatapoint:develop'
+      client_image:
+        description: 'FDP-Client image'
+        required: false
+        default: 'datastewardshipwizard/fairdatapoint-client:develop'
 
 jobs:
   dsw-e2e:
@@ -17,13 +27,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set variables from dispatch
+    - name: Set variables from repository dispatch
       if: github.event_name == 'repository_dispatch'
       uses: allenevans/set-env@v2.0.0
       with:
         SERVER_IMAGE: ${{ github.event.client_payload.server_image }}
         CLIENT_IMAGE: ${{ github.event.client_payload.client_image }}
-        OPEN_REFINE_IMAGE: ${{ github.event.client_payload.open_refine_image }}
+
+    - name: Set variables from workflow dispatch
+      if: github.event_name == 'workflow_dispatch'
+      uses: allenevans/set-env@v2.0.0
+      with:
+        SERVER_IMAGE: ${{ github.event.inputs.server_image }}
+        CLIENT_IMAGE: ${{ github.event.inputs.client_image }}
 
     - name: Prepare
       run: |
