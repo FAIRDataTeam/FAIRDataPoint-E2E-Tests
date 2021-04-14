@@ -166,13 +166,14 @@ describe('Resource Definitions', () => {
 
     it('create a new resource definition', () => {
         // Random string so that the test does not interfere with previous runs
-        const urlPrefix = `book-${btoa(+new Date).slice(-7, -2).toLowerCase()}`
+        const hash = btoa(+new Date).slice(-7, -2).toLowerCase()
+        const urlPrefix = `book-${hash}`
 
         // Create book resource definition
         cy.getCy('create-resourceDefinition').click()
         cy.getCy('add-target-class').click()
         cy.fillFields({
-            name: 'Book',
+            name: `Book ${hash}`,
             urlPrefix,
             'targetClass.0.uri': 'http://www.w3.org/ns/dcat#Resource',
         })
@@ -182,7 +183,7 @@ describe('Resource Definitions', () => {
         cy.getCy('resource-definition-link').contains('Repository').click()
         cy.getCy('add-child').click()
         cy.fillFields({
-            's_child.1.resource': 'Book',
+            's_child.1.resource': `Book ${hash}`,
             'child.1.relationUri': 'http://example.com/book',
             'child.1.listViewTitle': 'Books'
         })
@@ -195,7 +196,7 @@ describe('Resource Definitions', () => {
             .parent()
             .find('[data-cy="create"]').click()
         cy.fillFields({
-            title: 'My Book',
+            title: `My Book ${hash}`,
             hasVersion: '1.2.3',
             name: 'Publisher name'
         })
@@ -205,13 +206,13 @@ describe('Resource Definitions', () => {
 
         // Check the book is visible in repository list
         cy.visitClient('/')
-        cy.getCy('item').contains('My Book').click()
+        cy.getCy('item').contains(`My Book ${hash}`).click()
         cy.url().should('contain', `/${urlPrefix}/`)
         cy.get('h1').contains('My Book')
 
         // Navigate to settings and add user
         cy.getCy('settings').click()
-        cy.get('h1').contains('My Book Settings')
+        cy.get('h1').contains(`My Book ${hash} Settings`)
         cy.get('.vs__search').focus()
         cy.get('.vs__dropdown-menu [data-cy=user-item]').contains('Nikola Tesla').click()
         cy.getMemberships().then(memberships => {
@@ -223,9 +224,9 @@ describe('Resource Definitions', () => {
             cy.logout()
             cy.loginAs('user')
             cy.visitClient('/')
-            cy.getCy('item').contains('My Book').click()
+            cy.getCy('item').contains(`My Book ${hash}`).click()
             cy.url().should('contain', `/${urlPrefix}/`)
-            cy.get('h1').contains('My Book')
+            cy.get('h1').contains(`My Book ${hash}`)
             cy.getCy('membership-badge').contains('Owner')
         })
     })
