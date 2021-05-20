@@ -111,7 +111,7 @@ describe('Resource Definitions', () => {
 
         // Open Repository and check the empty dataset list view
         cy.visitClient('/')
-        cy.get('h2').contains('Datasets').should('exist')
+        cy.get('.nav-link').contains('Datasets').should('exist')
     })
 
     it('delete resource definition', () => {
@@ -191,10 +191,8 @@ describe('Resource Definitions', () => {
 
         // Check we have books on repository and create a new one
         cy.visitClient('/')
-        cy.get('h2')
-            .contains('Books')
-            .parent()
-            .find('[data-cy="create"]').click()
+        cy.get('.nav-link').contains('Books').click()
+        cy.get('[data-cy="create"]').click()
         cy.fillFields({
             title: `My Book ${hash}`,
             hasVersion: '1.2.3',
@@ -206,6 +204,7 @@ describe('Resource Definitions', () => {
 
         // Check the book is visible in repository list
         cy.visitClient('/')
+        cy.get('.nav-link').contains('Books').click()
         cy.getCy('item').contains(`My Book ${hash}`).click()
         cy.url().should('contain', `/${urlPrefix}/`)
         cy.get('h1').contains('My Book')
@@ -224,6 +223,7 @@ describe('Resource Definitions', () => {
             cy.logout()
             cy.loginAs('user')
             cy.visitClient('/')
+            cy.get('.nav-link').contains('Books').click()
             cy.getCy('item').contains(`My Book ${hash}`).click()
             cy.url().should('contain', `/${urlPrefix}/`)
             cy.get('h1').contains(`My Book ${hash}`)
