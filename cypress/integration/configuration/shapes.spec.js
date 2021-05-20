@@ -41,11 +41,24 @@ describe('Shapes', () => {
                 .and('contain', value)
     }
 
-    beforeEach(() => {
+    const deleteExtraShapes = () => {
         cy.task('mongo:delete', {
             collection: 'shape',
-            args: { type: 'CUSTOM' }
+            args: {
+                 name: { 
+                     $in: [
+                        'Repository Extra',
+                        'Catalog Extra',
+                        'Dataset Extra',
+                        'Distribution Extra',
+                    ]
+                }
+            }
         })
+    }
+
+    beforeEach(() => {
+        deleteExtraShapes()
         cy.clearCatalogs()
         cy.importCatalog('data/catalog.ttl').then((uuid) => {
             catalogUuid = uuid
@@ -60,6 +73,9 @@ describe('Shapes', () => {
         cy.visitClient('/shapes')
     })
 
+    after(() => {
+        deleteExtraShapes()
+    })
 
     it('repository extra shape', () => {
         const extraUrl = 'http://example.com/extra'
@@ -76,7 +92,7 @@ describe('Shapes', () => {
         const entityPage = `/catalog/${catalogUuid}`
         const extraUrl = 'http://example.com/extra'
 
-        createShape('Repository Extra', 'catalog-extra')
+        createShape('Catalog Extra', 'catalog-extra')
 
         // edit catalog with the new fields
         cy.visitClient(entityPage)
