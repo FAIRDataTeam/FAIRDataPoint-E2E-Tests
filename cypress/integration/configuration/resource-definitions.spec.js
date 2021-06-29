@@ -171,11 +171,11 @@ describe('Resource Definitions', () => {
 
         // Create book resource definition
         cy.getCy('create-resourceDefinition').click()
-        cy.getCy('add-target-class').click()
+        cy.getCy('add-shape').click()
         cy.fillFields({
             name: `Book ${hash}`,
             urlPrefix,
-            'targetClass.0.uri': 'http://www.w3.org/ns/dcat#Resource',
+            's_shapeUuids.0.uuid': 'Resource',
         })
         cy.getCy('save').click()
 
