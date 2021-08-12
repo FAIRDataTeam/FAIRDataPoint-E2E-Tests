@@ -7,7 +7,7 @@ describe('Swagger', () => {
         cy.get('.btn').contains('Try it out').click()
         cy.get('.btn').contains('Execute').click()
         cy.get('h4')
-            .contains('Server response')
+            .contains('Responses')
             .parent()
             .get('table .response-col_status')
             .contains('200')

@@ -13,6 +13,10 @@ describe('Resource Definitions', () => {
             "http://www.w3.org/ns/dcat#Resource", 
             "http://www.w3.org/ns/dcat#Catalog"
         ],
+        "shapeUuids": [
+            "6a668323-3936-4b53-8380-a4fd2ed082ee",
+            "2aa7ba63-d27a-4c0e-bfa6-3a4e250f4660"
+        ],
         "children" : [],
         "externalLinks" : [],
         "_class" : "nl.dtls.fairdatapoint.entity.resource.ResourceDefinition"
