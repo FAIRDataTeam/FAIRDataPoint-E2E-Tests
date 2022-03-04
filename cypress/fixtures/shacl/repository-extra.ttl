@@ -2,11 +2,11 @@
 @prefix sh:   <http://www.w3.org/ns/shacl#> .
 @prefix dash: <http://datashapes.org/dash#> .
 @prefix ex:   <http://example.org/> .
-@prefix r3d:  <http://www.re3data.org/schema/3-0#> .
+@prefix fdp:  <https://w3id.org/fdp/fdp-o#> .
 
 
 :RepositoryExtraShape a sh:NodeShape ;
-  sh:targetClass r3d:Repository ;
+  sh:targetClass fdp:FAIRDataPoint ;
   sh:property [
       sh:path ex:extraUrl ;
       sh:nodeKind sh:IRI ;

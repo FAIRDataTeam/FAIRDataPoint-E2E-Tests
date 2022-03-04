@@ -104,7 +104,7 @@ describe('Resource Definitions', () => {
 
     it('add child to parent', () => {
         // Edit repository resource defintion, add dataset as a child
-        cy.getCy('resource-definition-link').contains('Repository').click()
+        cy.getCy('resource-definition-link').contains('FAIR Data Point').click()
         cy.getCy('add-child').click()
         cy.fillFields({
             's_child.1.resource': '2f08228e-1789-40f8-84cd-28e3288c3604',
@@ -184,7 +184,7 @@ describe('Resource Definitions', () => {
         cy.getCy('save').click()
 
         // Add book as a new child of repository
-        cy.getCy('resource-definition-link').contains('Repository').click()
+        cy.getCy('resource-definition-link').contains('FAIR Data Point').click()
         cy.getCy('add-child').click()
         cy.fillFields({
             's_child.1.resource': `Book ${hash}`,
@@ -252,7 +252,7 @@ describe('Resource Definitions', () => {
     // TODO - doesn't work yet
     it.skip('add target class', () => {
         // Edit repository resource defintion, adding dataset target class
-        cy.getCy('resource-definition-link').contains('Repository').click()
+        cy.getCy('resource-definition-link').contains('FAIR Data Point').click()
         cy.getCy('add-target-class').click()
         cy.fillFields({ 'targetClass.2.uri': 'http://www.w3.org/ns/dcat#Dataset' })
         cy.getCy('save').click()

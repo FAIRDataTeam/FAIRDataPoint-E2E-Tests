@@ -131,12 +131,11 @@ Cypress.Commands.add('clearCatalogs', () => {
         .then((resp) => {
             const apiUrl = Cypress.env('api_url')
             const persistentUrl = Cypress.env('persistent_url')
-
             const store = $rdf.graph()
             const subject = $rdf.namedNode(persistentUrl)
             $rdf.parse(resp.body, store, persistentUrl, 'text/turtle')
 
-            const catalogs = store.match(subject, $rdf.namedNode('http://www.re3data.org/schema/3-0#dataCatalog'))
+            const catalogs = store.match(subject, $rdf.namedNode('https://w3id.org/fdp/fdp-o#metadataCatalog'))
             catalogs.forEach((catalog) => {
                 const url = catalog.object.value.replace(persistentUrl, apiUrl)
                 cy.request({
