@@ -28,7 +28,7 @@ describe('Login', () => {
 
             // open menu and check correct sections
             cy.get('@user-menu').find('button').click()
-            cy.getCy('user-menu-admin').should(shouldSeeAdminMenu ? 'be.visible' : 'not.be.visible')
+            cy.getCy('user-menu-admin').should(shouldSeeAdminMenu ? 'be.visible' : 'not.exist')
             cy.getCy('user-menu-user').should('be.visible')
         })
     })
