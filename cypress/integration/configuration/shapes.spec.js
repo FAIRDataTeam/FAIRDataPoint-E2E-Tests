@@ -21,7 +21,7 @@ describe('Shapes', () => {
         cy.getCy('edit').click()
         cy.fillFields(fields)
         cy.getCy('save').click()
-        cy.url().should('be', entityPage)
+        cy.url().should('contain', entityPage)
     }
 
     const checkMetadataLiteral = (label, value) => {
@@ -105,7 +105,7 @@ describe('Shapes', () => {
             animalUrl: 'http://example.com/rex'
         })
         cy.getCy('save').click()
-        cy.url().should('be', entityPage)
+        cy.url().should('contain', entityPage)
 
         checkMetadataUri('Extra url', extraUrl, 'extra')
     })
