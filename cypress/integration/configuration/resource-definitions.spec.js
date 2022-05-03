@@ -13,8 +13,7 @@ describe('Resource Definitions', () => {
             "http://www.w3.org/ns/dcat#Resource", 
             "http://www.w3.org/ns/dcat#Catalog"
         ],
-        "shapeUuids": [
-            "6a668323-3936-4b53-8380-a4fd2ed082ee",
+        "metadataSchemaUuids": [
             "2aa7ba63-d27a-4c0e-bfa6-3a4e250f4660"
         ],
         "children" : [],
@@ -175,11 +174,11 @@ describe('Resource Definitions', () => {
 
         // Create book resource definition
         cy.getCy('create-resourceDefinition').click()
-        cy.getCy('add-shape').click()
+        cy.getCy('add-metadata-schema').click()
         cy.fillFields({
             name: `Book ${hash}`,
             urlPrefix,
-            's_shapeUuids.0.uuid': 'Resource',
+            's_metadataSchemaUuids.0.uuid': 'Catalog',
         })
         cy.getCy('save').click()
 
@@ -233,46 +232,5 @@ describe('Resource Definitions', () => {
             cy.get('h1').contains(`My Book ${hash}`)
             cy.getCy('membership-badge').contains('Owner')
         })
-    })
-
-    // TODO - doesn't work yet
-    it.skip('remove target class', () => {
-        // Edit dataset resource defintion, removing dataset target class
-        cy.getCy('resource-definition-link').contains('Dataset').click()
-        cy.getCy('targetClass.1.remove').click()
-        cy.getCy('save').click()
-
-        // Edit dataset and check that the fields are no longer there
-        cy.visitClient(`/dataset/${datasetUuid}/edit`)
-        cy.get('h1').contains('Gene disease association (LUMC)')
-        cy.get('label').contains('Theme').should('not.exist')
-        cy.get('label').contains('Keyword').should('not.exist')
-    })
-
-    // TODO - doesn't work yet
-    it.skip('add target class', () => {
-        // Edit repository resource defintion, adding dataset target class
-        cy.getCy('resource-definition-link').contains('FAIR Data Point').click()
-        cy.getCy('add-target-class').click()
-        cy.fillFields({ 'targetClass.2.uri': 'http://www.w3.org/ns/dcat#Dataset' })
-        cy.getCy('save').click()
-
-        // Edit repository and check that the new fields are there
-        cy.visitClient(`/edit`)
-        cy.get('label').contains('Theme').should('exist')
-        cy.get('label').contains('Keyword').should('exist')
-    })
-
-    // TODO - doesn't work yet
-    it.skip('change url prefix', () => {
-        // Edit catalog resource definition, changing the url prefix
-        cy.getCy('resource-definition-link').contains('Catalog').click()
-        cy.fillFields({ 'urlPrefix': 'book' })
-        cy.getCy('save').click()
-
-        // Navigate to the catalog through repostiory and check the new url prefix
-        cy.visitClient('/')
-        cy.get('.item__title').click()
-        cy.url().should('be', `/book/${catalogUuid}`)
     })
 })
