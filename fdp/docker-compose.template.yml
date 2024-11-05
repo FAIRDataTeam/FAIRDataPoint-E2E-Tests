@@ -1,11 +1,14 @@
 version: '3'
 services:
-  fdp-server:
+  fdp:
+    # entire string `{SERVER_IMAGE}` is replaced in scripts/init.sh 
     image: {SERVER_IMAGE}
     restart: always
     ports:
+      # <host port>:<container port>
       - 3000:80
     volumes:
+      # bind mount
       - ./application.yml:/fdp/application.yml:ro
 
   fdp-client:
@@ -14,11 +17,29 @@ services:
       - 80:80
       - 3333:3333
     environment:
-      - FDP_HOST=fdp-server
+      # fdp service is defined above
+      - FDP_HOST=fdp
       
+  # FDP <=1.17.x uses mongodb
   mongo:
     image: mongo:4.0.12
     restart: always
     ports:
       - 27017:27017
     command: mongod
+    # use `--profile mongo` to enable
+    # https://docs.docker.com/compose/how-tos/profiles/
+    profiles: [mongo]
+
+  # FDP >1.17.x uses postgresql
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: fdp_test
+      POSTGRES_USER: fdp
+      POSTGRES_PASSWORD: fdp
+    ports:
+      - 54321:5432
+    # use `--profile postgres` to enable
+    profiles: [postgres]
