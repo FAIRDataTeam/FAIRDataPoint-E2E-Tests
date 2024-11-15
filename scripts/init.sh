@@ -25,6 +25,7 @@ case $SERVER_IMAGE in
 # todo: change `mongo` to `mongosh` (after upgrade to mongo >6.0)
 cat <<'HEREDOC' >> $DOCKER_COMPOSE_FILE
     image: mongo:4.0.12
+    hostname: mongo
     ports:
       - 27017:27017
     healthcheck:
