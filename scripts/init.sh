@@ -13,10 +13,9 @@ DOCKER_COMPOSE_FILE=fdp/compose.yml
 cp fdp/compose.template.yml $DOCKER_COMPOSE_FILE
 
 # Replace Docker image names in newly created Docker Compose file
-# (backup file as .bak, remove backup after successful edit)
 # (uses `#` as `sed` delimiter, instead of default `/`, because the search and replace strings contain `/`)
-sed --in-place=.bak "s#{SERVER_IMAGE}#$SERVER_IMAGE#" $DOCKER_COMPOSE_FILE && rm $DOCKER_COMPOSE_FILE".bak"
-sed --in-place=.bak "s#{CLIENT_IMAGE}#$CLIENT_IMAGE#" $DOCKER_COMPOSE_FILE && rm $DOCKER_COMPOSE_FILE".bak"
+sed --in-place "s#{SERVER_IMAGE}#$SERVER_IMAGE#" $DOCKER_COMPOSE_FILE
+sed --in-place "s#{CLIENT_IMAGE}#$CLIENT_IMAGE#" $DOCKER_COMPOSE_FILE
 
 # Show result
 echo "Initialized docker compose file:"
