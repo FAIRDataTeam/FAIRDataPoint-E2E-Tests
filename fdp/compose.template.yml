@@ -1,4 +1,3 @@
-version: '3'
 services:
   fdp:
     # entire string `{SERVER_IMAGE}` is replaced in scripts/init.sh 
@@ -36,7 +35,7 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_DB: fdp_test
+      POSTGRES_DB: fdp
       POSTGRES_USER: fdp
       POSTGRES_PASSWORD: fdp
     ports:

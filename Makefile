@@ -49,9 +49,9 @@ ci:
 
 .PHONY: clean
 clean:
-	@rm -rf output && rm -rf fdp/graphdb && rm -f fdp/docker-compose.yml && rm -rf fdp/openrefine-cfg/*.yaml
+	@rm -rf output && rm -rf fdp/graphdb && rm -f fdp/compose.yml && rm -rf fdp/openrefine-cfg/*.yaml
 
 
 .PHONY: logs
 logs:
-	@cd fdp && docker-compose logs -f
+	@cd fdp && docker compose logs -f
