@@ -12,15 +12,9 @@ services:
     healthcheck:
       test: curl --no-progress-meter --fail http://fdp:80 || exit 1
     depends_on:
-      # actually either mongo or postgres, depending on profile,
-      # but conditional depends_on is not supported, so we use the required=false hack
-      mongo:
+      db:
         condition: service_healthy
-        required: false
-      postgres:
-        condition: service_healthy
-        required: false
-
+      
   fdp-client:
     image: {CLIENT_IMAGE}
     ports:
@@ -32,33 +26,6 @@ services:
     depends_on:
       fdp:
         condition: service_healthy
-      
-  # FDP <=1.17.x uses mongodb
-  mongo:
-    image: mongo:4.0.12
-    restart: always
-    ports:
-      - 27017:27017
-    command: mongod
-    # use `docker compose --profile mongo up -d` to enable
-    # https://docs.docker.com/compose/how-tos/profiles/
-    profiles: [mongo]
-    healthcheck:
-      # todo: change `mongo` to `mongosh` (after upgrade to latest version)
-      test: |
-        [ $(mongo --quiet --host mongo:27017 --eval "db.runCommand('ping').ok") = 1 ] || exit 1
 
-  # FDP >1.17.x uses postgresql
-  postgres:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_DB: fdp
-      POSTGRES_USER: fdp
-      POSTGRES_PASSWORD: fdp
-    ports:
-      - 54321:5432
-    # use `--profile postgres` to enable
-    profiles: [postgres]
-    healthcheck:
-      test: pg_isready || exit 1
+  db:
+    # content added by init.sh script (database type depends on fdp version)

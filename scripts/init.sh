@@ -17,6 +17,39 @@ cp fdp/compose.template.yml $DOCKER_COMPOSE_FILE
 sed --in-place "s#{SERVER_IMAGE}#$SERVER_IMAGE#" $DOCKER_COMPOSE_FILE
 sed --in-place "s#{CLIENT_IMAGE}#$CLIENT_IMAGE#" $DOCKER_COMPOSE_FILE
 
+# Configure database based on FDP version
+# (mongodb for <=1.17.x, postgresql for later versions)
+case $SERVER_IMAGE in 
+*1.16*|*1.17*)
+# use mongodb
+# todo: change `mongo` to `mongosh` (after upgrade to mongo >6.0)
+cat <<'HEREDOC' >> $DOCKER_COMPOSE_FILE
+    image: mongo:4.0.12
+    ports:
+      - 27017:27017
+    healthcheck:
+      test: |
+        [ $(mongo --quiet --host mongo:27017 --eval "db.runCommand('ping').ok") = 1 ] || exit 1
+    restart: always
+HEREDOC
+;; 
+*)
+# use postgresql
+cat <<'HEREDOC' >> $DOCKER_COMPOSE_FILE
+    image: postgres
+    ports:
+      - 54321:5432
+    healthcheck:
+      test: pg_isready || exit 1
+    environment:
+      POSTGRES_DB: fdp
+      POSTGRES_USER: fdp
+      POSTGRES_PASSWORD: fdp
+    restart: always
+HEREDOC
+;;
+esac
+
 # Show result
 echo "Initialized docker compose file:"
 cat $DOCKER_COMPOSE_FILE
