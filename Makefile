@@ -1,5 +1,9 @@
 CYPRESS=./node_modules/.bin/cypress
 
+# allow selection of database (see docker compose template)
+# usage example: `make DB=mongo`
+DB = postgres
+
 .PHONY: install
 install:
 	@npm install
@@ -10,11 +14,11 @@ init:
 
 .PHONY: start
 start:
-	@cd fdp && docker-compose pull && docker-compose up -d
+	@cd fdp && docker compose --profile $(DB) up -d
 
 .PHONY: stop
 stop:
-	@cd fdp && docker-compose down
+	@cd fdp && docker compose down
 
 .PHONY: run
 run:
