@@ -21,11 +21,10 @@
 
 When initializing the `compose.yml` file, the following ENV variables can be used to choose different images to test.
 
-| ENV | Default |
-| --- | --- |
-| SERVER_IMAGE | `fairdata/fairdatapoint:develop` |
-| CLIENT_IMAGE | `fairdata/fairdatapoint-client:develop` |
-| OPEN_REFINE_IMAGE | `fairdata/openrefine-metadata-extension:develop` |
+| Name | Example | Default |
+| --- | --- | --- |
+| SERVER_VERSION | `1.16` | `develop` |
+| CLIENT_VERSION | `1.16` | `develop` |
 
 ## Running the tests
 

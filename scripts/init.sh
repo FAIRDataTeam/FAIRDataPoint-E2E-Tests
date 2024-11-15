@@ -2,9 +2,9 @@
 
 # Create a docker compose file based on template
 
-# Get Docker image names from environment, with fallback to develop
-SERVER_IMAGE="${SERVER_IMAGE:-fairdata/fairdatapoint:develop}"
-CLIENT_IMAGE="${CLIENT_IMAGE:-fairdata/fairdatapoint-client:develop}"
+# Get Docker image versions from environment, with fallback to develop
+SERVER_IMAGE="fairdata/fairdatapoint:${SERVER_VERSION:-develop}"
+CLIENT_IMAGE="fairdata/fairdatapoint-client:${CLIENT_VERSION:-develop}"
 
 # Path to Docker Compose file (to be created)
 DOCKER_COMPOSE_FILE=fdp/compose.yml
