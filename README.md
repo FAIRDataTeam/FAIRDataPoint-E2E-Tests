@@ -1,6 +1,6 @@
 # FAIR Data Point E2E Tests
 
-> E2E test suite for the [FAIR Data Point](https://github.com/FAIRDataTeam/FAIRDataPoint), [FAIR Data Point Client](https://github.com/FAIRDataTeam/FAIRDataPoint-client) and [Open Refine Metadata Extension](https://github.com/FAIRDataTeam/OpenRefine-metadata-extension) based on [Cypress](https://www.cypress.io).
+> E2E test suite for the [FAIR Data Point][1], [FAIR Data Point Client][2], and [Open Refine Metadata Extension][3], based on [Cypress][4].
 
 
 ## Project Structure
@@ -39,6 +39,16 @@ Makefile contains several commands to work with the project.
 - `make ci` - shortcut for the whole workflow in CI
 - `make clean` - clean all generated files
 
+For convenience, it is also possible to run the tests through `npm run test`.
+To add [cypress cli options][5], use `--`, e.g. `npm run test -- <cypress options>`.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for more details.
+
+
+[1]: https://github.com/FAIRDataTeam/FAIRDataPoint
+[2]: https://github.com/FAIRDataTeam/FAIRDataPoint-client
+[3]: https://github.com/FAIRDataTeam/OpenRefine-metadata-extension
+[4]: https://www.cypress.io
+[5]: https://docs.cypress.io/app/references/command-line#Commands
