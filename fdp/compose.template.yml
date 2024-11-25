@@ -7,7 +7,13 @@ services:
       # <host port>:<container port>
       - 127.0.0.1:3000:80
     environment:
+      # postgres variables are ignored if mongodb is used
+      # values must match those specified for db in scripts/init.sh
+      # see config in FDP application.yml
       FDP_POSTGRES_HOST: db
+      FDP_POSTGRES_DB: fdp
+      FDP_POSTGRES_USERNAME: fdp
+      FDP_POSTGRES_PASSWORD: fdp
     volumes:
       # bind mount
       - ./application.yml:/fdp/application.yml:ro
