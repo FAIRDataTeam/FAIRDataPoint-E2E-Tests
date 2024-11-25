@@ -5,7 +5,9 @@ services:
     restart: always
     ports:
       # <host port>:<container port>
-      - 3000:80
+      - 127.0.0.1:3000:80
+    environment:
+      FDP_POSTGRES_HOST: db
     volumes:
       # bind mount
       - ./application.yml:/fdp/application.yml:ro
@@ -18,8 +20,8 @@ services:
   fdp-client:
     image: {CLIENT_IMAGE}
     ports:
-      - 80:80
-      - 3333:3333
+      - 127.0.0.1:80:80
+      - 127.0.0.1:3333:3333
     environment:
       # fdp service is defined above
       - FDP_HOST=fdp

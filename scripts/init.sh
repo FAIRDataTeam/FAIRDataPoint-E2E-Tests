@@ -27,7 +27,7 @@ cat <<'HEREDOC' >> $DOCKER_COMPOSE_FILE
     image: mongo:4.0.12
     hostname: mongo
     ports:
-      - 27017:27017
+      - 127.0.0.1:27017:27017
     healthcheck:
       test: |
         [ $(mongo --quiet --host mongo:27017 --eval "db.runCommand('ping').ok") = 1 ] || exit 1
@@ -39,7 +39,7 @@ HEREDOC
 cat <<'HEREDOC' >> $DOCKER_COMPOSE_FILE
     image: postgres
     ports:
-      - 54321:5432
+      - 127.0.0.1:54321:5432
     healthcheck:
       test: pg_isready || exit 1
     environment:
