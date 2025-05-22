@@ -9,7 +9,7 @@
     - Contains all test files following the standard [Cypress structure](https://docs.cypress.io/guides/core-concepts/writing-and-organizing-tests.html#Support-file).
 - `/fdp`
     - Contains the configuration to run FDP and other associated services in Docker.
-    - The actual docker compose.yml file is generated during initialization.
+    - The actual Docker `compose.yml` file is generated during initialization.
 - `/scripts`
     - Additional utility scripts.
 - `/cypress.json`
@@ -31,7 +31,7 @@ When initializing the `compose.yml` file, the following ENV variables can be use
 Makefile contains several commands to work with the project.
 
 - `make install` - install all the dependencies to run the tests
-- `make init` - initialize docker compose file so that the project can run
+- `make init` - initialize Docker `compose.yml` file so that the project can run
 - `make start` - start all containers
 - `make stop` - stop all containers
 - `make run` - run tests in headless mode
