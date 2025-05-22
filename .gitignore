@@ -78,6 +78,5 @@ output
 # Cypress env
 cypress.env.json
 
-fdp/graphdb
 fdp/compose.yml
 fdp/docker-compose.yml

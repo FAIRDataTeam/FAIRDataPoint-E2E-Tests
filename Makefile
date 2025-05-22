@@ -45,7 +45,7 @@ ci:
 
 .PHONY: clean
 clean:
-	@rm -rf output && rm -rf fdp/graphdb && rm -f fdp/compose.yml
+	@rm -rf output && rm -f fdp/compose.yml
 
 
 .PHONY: logs
