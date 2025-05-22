@@ -1,20 +1,26 @@
 CYPRESS=./node_modules/.bin/cypress
 
+ifndef SERVER_VERSION
+SERVER_VERSION = develop
+endif
+
+ifeq ($(SERVER_VERSION),develop)
+compose_file = compose.develop.yml
+else
+compose_file = compose.1.x.yml
+endif
+
 .PHONY: install
 install:
 	@npm install
 
-.PHONY: init
-init:
-	@scripts/init.sh
-
 .PHONY: start
 start:
-	@cd fdp && docker compose up -d
+	@cd fdp && docker compose -f $(compose_file) up -d
 
 .PHONY: stop
 stop:
-	@cd fdp && docker compose down
+	@cd fdp && docker compose -f $(compose_file) down
 
 .PHONY: run
 run:
@@ -24,7 +30,7 @@ run:
 
 .PHONY: wait
 wait:
-	@while ! curl http://localhost:3000/actuator/health 2>/dev/null; \
+	@while ! curl http://localhost:8080/actuator/health 2>/dev/null; \
 	do \
 		echo "Retrying ..."; \
 		sleep 2; \
@@ -37,7 +43,6 @@ open:
 .PHONY: ci
 ci:
 	make clean
-	make init
 	make start
 	make wait
 	make run
@@ -45,9 +50,9 @@ ci:
 
 .PHONY: clean
 clean:
-	@rm -rf output && rm -f fdp/compose.yml
+	@rm -rf output
 
 
 .PHONY: logs
 logs:
-	@cd fdp && docker compose logs -f
+	@cd fdp && docker compose -f $(compose_file) logs

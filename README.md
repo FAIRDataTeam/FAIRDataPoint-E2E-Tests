@@ -10,8 +10,6 @@
 - `/fdp`
     - Contains the configuration to run FDP and other associated services in Docker.
     - The actual Docker `compose.yml` file is generated during initialization.
-- `/scripts`
-    - Additional utility scripts.
 - `/cypress.json`
     - Contains the default configuration and env.
     - You can overwrite env values [with a `cypress.env.json` file](https://docs.cypress.io/guides/guides/environment-variables.html#Option-2-cypress-env-json).
