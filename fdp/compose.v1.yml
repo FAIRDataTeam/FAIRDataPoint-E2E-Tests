@@ -1,4 +1,4 @@
-name: fdp.1.x
+name: fdp_v1
 
 services:
   mongo:

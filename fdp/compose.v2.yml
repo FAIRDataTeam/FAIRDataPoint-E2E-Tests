@@ -1,4 +1,4 @@
-name: fdp.develop
+name: fdp_v2
 
 services:
   postgres:

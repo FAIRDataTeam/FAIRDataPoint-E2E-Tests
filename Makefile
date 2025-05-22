@@ -1,14 +1,15 @@
 CYPRESS=./node_modules/.bin/cypress
 
-ifndef SERVER_VERSION
-SERVER_VERSION = develop
-endif
-
-ifeq ($(SERVER_VERSION),develop)
-compose_file = compose.develop.yml
+# make has no starts-with, nor is there a simple way to get the first character from a string,
+# so we insert a space after every "1" (if any), to split into separate words,
+# then get the first word and check if it equals "1"
+major_version = $(word 1, $(subst 1, 1 , $(SERVER_VERSION)))
+ifeq ($(major_version), 1)
+compose_file = compose.v1.yml
 else
-compose_file = compose.1.x.yml
+compose_file = compose.v2.yml
 endif
+$(info using $(compose_file))
 
 .PHONY: install
 install:
