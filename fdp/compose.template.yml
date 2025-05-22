@@ -18,7 +18,9 @@ services:
       # bind mount
       - ./application.yml:/fdp/application.yml:ro
     healthcheck:
-      test: curl --no-progress-meter --fail http://fdp:80 || exit 1
+      test: curl --no-progress-meter --fail http://localhost:80 || exit 1
+      start_interval: 3s
+      start_period: 30s
     depends_on:
       db:
         condition: service_healthy

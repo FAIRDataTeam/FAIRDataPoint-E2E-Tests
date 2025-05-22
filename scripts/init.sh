@@ -30,7 +30,9 @@ cat <<'HEREDOC' >> $DOCKER_COMPOSE_FILE
       - 127.0.0.1:27017:27017
     healthcheck:
       test: |
-        [ $(mongo --quiet --host mongo:27017 --eval "db.runCommand('ping').ok") = 1 ] || exit 1
+        [ $(mongo --quiet --host localhost:27017 --eval "db.runCommand('ping').ok") = 1 ] || exit 1
+      start_interval: 3s
+      start_period: 30s
     restart: always
 HEREDOC
 ;; 
@@ -42,6 +44,8 @@ cat <<'HEREDOC' >> $DOCKER_COMPOSE_FILE
       - 127.0.0.1:54321:5432
     healthcheck:
       test: pg_isready || exit 1
+      start_interval: 3s
+      start_period: 30s
     environment:
       POSTGRES_DB: fdp
       POSTGRES_USER: fdp
