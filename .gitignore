@@ -81,4 +81,3 @@ cypress.env.json
 fdp/graphdb
 fdp/compose.yml
 fdp/docker-compose.yml
-fdp/openrefine-cfg/*.yaml

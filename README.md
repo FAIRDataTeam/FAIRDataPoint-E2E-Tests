@@ -1,6 +1,6 @@
 # FAIR Data Point E2E Tests
 
-> E2E test suite for the [FAIR Data Point][1], [FAIR Data Point Client][2], and [Open Refine Metadata Extension][3], based on [Cypress][4].
+> E2E test suite for the [FAIR Data Point][1], [FAIR Data Point Client][2], based on [Cypress][4].
 
 
 ## Project Structure
@@ -49,6 +49,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 [1]: https://github.com/FAIRDataTeam/FAIRDataPoint
 [2]: https://github.com/FAIRDataTeam/FAIRDataPoint-client
-[3]: https://github.com/FAIRDataTeam/OpenRefine-metadata-extension
 [4]: https://www.cypress.io
 [5]: https://docs.cypress.io/app/references/command-line#Commands

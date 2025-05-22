@@ -1,7 +1,6 @@
 {
   "env": {
     "client_url": "http://localhost",
-    "open_refine_url": "http://localhost:3333",
     "api_url": "http://localhost",
     "persistent_url": "http://example.com/fdp/e2e",
     "admin_username": "albert.einstein@example.com",
@@ -13,9 +12,7 @@
     "user_first_name": "Nikola",
     "user_last_name": "Tesla",
     "mongoUrl": "mongodb://localhost:27017",
-    "mongoDBName": "fdp",
-    "open_refine_settings": "fdp/openrefine-cfg/settings.yaml",
-    "open_refine_storages": "fdp/openrefine-cfg/storages.yaml"
+    "mongoDBName": "fdp"
   },
   "screenshotsFolder": "output/screenshots",
   "videosFolder": "output/videos",
