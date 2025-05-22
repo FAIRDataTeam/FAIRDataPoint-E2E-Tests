@@ -29,7 +29,6 @@ When initializing the `compose.yml` file, the following ENV variables can be use
 Makefile contains several commands to work with the project.
 
 - `make install` - install all the dependencies to run the tests
-- `make init` - initialize Docker `compose.yml` file so that the project can run
 - `make start` - start all containers
 - `make stop` - stop all containers
 - `make run` - run tests in headless mode
