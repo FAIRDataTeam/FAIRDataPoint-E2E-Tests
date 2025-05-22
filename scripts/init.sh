@@ -33,7 +33,6 @@ cat <<'HEREDOC' >> $DOCKER_COMPOSE_FILE
         [ $(mongo --quiet --host localhost:27017 --eval "db.runCommand('ping').ok") = 1 ] || exit 1
       start_interval: 3s
       start_period: 30s
-    restart: always
 HEREDOC
 ;; 
 *)
@@ -50,7 +49,6 @@ cat <<'HEREDOC' >> $DOCKER_COMPOSE_FILE
       POSTGRES_DB: fdp
       POSTGRES_USER: fdp
       POSTGRES_PASSWORD: fdp
-    restart: always
 HEREDOC
 ;;
 esac

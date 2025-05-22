@@ -2,7 +2,6 @@ services:
   fdp:
     # entire string `{SERVER_IMAGE}` is replaced in scripts/init.sh 
     image: {SERVER_IMAGE}
-    restart: always
     ports:
       # <host port>:<container port>
       - 127.0.0.1:3000:80
