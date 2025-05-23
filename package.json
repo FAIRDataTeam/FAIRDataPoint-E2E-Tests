@@ -2,6 +2,9 @@
   "name": "dsw-e2e-tests",
   "version": "0.1.0",
   "license": "MIT",
+  "scripts": {
+    "test": "cypress run"
+  },
   "dependencies": {
     "mongodb": "^3.7.3",
     "rdflib": "^1.3.4"

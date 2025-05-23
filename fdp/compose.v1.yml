@@ -1,0 +1,37 @@
+name: fdp_v1
+
+services:
+  mongo:
+    image: mongo:4.4
+    healthcheck:
+      test: |
+        [ $(mongo --quiet --host localhost:27017 --eval "db.runCommand('ping').ok") = 1 ] || exit 1
+      start_interval: 3s
+      start_period: 30s
+
+  fdp:
+    image: fairdata/fairdatapoint:${SERVER_VERSION}
+    ports:
+      # direct access to fdp backend only used in "make wait"
+      - "127.0.0.1:8080:8080"
+    environment:
+      SERVER_PORT: 8080
+      INSTANCE_CLIENTURL: http://localhost
+      INSTANCE_PERSISTENTURL: http://example.com/fdp/e2e
+    depends_on:
+      mongo:
+        condition: service_healthy
+    healthcheck:
+      test: curl --no-progress-meter --fail http://localhost:8080 || exit 1
+      start_interval: 3s
+      start_period: 30s
+
+  fdp-client:
+    image: fairdata/fairdatapoint-client:${CLIENT_VERSION}
+    ports:
+      - "127.0.0.1:80:80"
+    environment:
+      - FDP_HOST=fdp:8080
+    depends_on:
+      fdp:
+        condition: service_healthy

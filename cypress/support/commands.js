@@ -4,10 +4,6 @@ Cypress.Commands.add('visitClient', (url) => {
     cy.visit(`${Cypress.env('client_url')}${url}`)
 })
 
-Cypress.Commands.add('visitOpenRefine', (url) => {
-    cy.visit(`${Cypress.env('open_refine_url')}${url}`)
-})
-
 // Selection commands
 
 Cypress.Commands.add('getCy', (key) => {

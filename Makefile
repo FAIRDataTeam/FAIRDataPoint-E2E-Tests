@@ -1,20 +1,27 @@
 CYPRESS=./node_modules/.bin/cypress
 
+# make has no starts-with, nor is there a simple way to get the first character from a string,
+# so we insert a space after every "1" (if any), to split into separate words,
+# then get the first word and check if it equals "1"
+major_version = $(word 1, $(subst 1, 1 , $(SERVER_VERSION)))
+ifeq ($(major_version), 1)
+compose_file = compose.v1.yml
+else
+compose_file = compose.v2.yml
+endif
+$(info using $(compose_file))
+
 .PHONY: install
 install:
 	@npm install
 
-.PHONY: init
-init:
-	@scripts/init.sh
-
 .PHONY: start
 start:
-	@cd fdp && docker-compose pull && docker-compose up -d
+	@cd fdp && docker compose -f $(compose_file) up -d
 
 .PHONY: stop
 stop:
-	@cd fdp && docker-compose down
+	@cd fdp && docker compose -f $(compose_file) down
 
 .PHONY: run
 run:
@@ -24,7 +31,7 @@ run:
 
 .PHONY: wait
 wait:
-	@while ! curl http://localhost:3000/actuator/health 2>/dev/null; \
+	@while ! curl http://localhost:8080/actuator/health 2>/dev/null; \
 	do \
 		echo "Retrying ..."; \
 		sleep 2; \
@@ -37,7 +44,6 @@ open:
 .PHONY: ci
 ci:
 	make clean
-	make init
 	make start
 	make wait
 	make run
@@ -45,9 +51,9 @@ ci:
 
 .PHONY: clean
 clean:
-	@rm -rf output && rm -rf fdp/graphdb && rm -f fdp/docker-compose.yml && rm -rf fdp/openrefine-cfg/*.yaml
+	@rm -rf output
 
 
 .PHONY: logs
 logs:
-	@cd fdp && docker-compose logs -f
+	@cd fdp && docker compose -f $(compose_file) logs

@@ -1,0 +1,45 @@
+name: fdp_v2
+
+services:
+  postgres:
+    image: postgres:17
+    healthcheck:
+      test: pg_isready --dbname=fdp --username=fdp || exit 1
+      start_interval: 3s
+      start_period: 30s
+    environment:
+      POSTGRES_DB: fdp
+      POSTGRES_PASSWORD: fdp
+      POSTGRES_USER: fdp
+
+  fdp:
+    image: fairdata/fairdatapoint:${SERVER_VERSION:-develop}
+    ports:
+      # direct access to fdp backend only used in "make wait"
+      - "127.0.0.1:8080:8080"
+    environment:
+      INSTANCE_CLIENTURL: http://localhost
+      INSTANCE_PERSISTENTURL: http://example.com/fdp/e2e
+      JAVA_TOOL_OPTIONS: -Dspring.profiles.active=development
+      SERVER_PORT: 8080
+      SPRING_AUTOCONFIGURE_EXCLUDE: org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+      SPRING_DATASOURCE_PASSWORD: fdp
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/fdp
+      SPRING_DATASOURCE_USERNAME: fdp
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: wget -q --spider http://localhost:8080 || exit 1
+      start_interval: 3s
+      start_period: 30s
+
+  fdp-client:
+    image: fairdata/fairdatapoint-client:${CLIENT_VERSION:-develop}
+    ports:
+      - "127.0.0.1:80:80"
+    environment:
+      FDP_HOST: fdp:8080
+    depends_on:
+      fdp:
+        condition: service_healthy

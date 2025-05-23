@@ -1,6 +1,0 @@
-instance:
-  clientUrl: http://localhost
-  persistentUrl: http://example.com/fdp/e2e
-
-server:
-  port: 80

@@ -45,7 +45,6 @@ jobs:
       run: |
         docker login -u "$PRIVATE_REGISTRY_USERNAME" -p "$PRIVATE_REGISTRY_PASSWORD" "$PRIVATE_REGISTRY_URL"
         make clean
-        make init
       env:
         PRIVATE_REGISTRY_URL: ${{ secrets.PRIVATE_REGISTRY_URL }}
         PRIVATE_REGISTRY_USERNAME: ${{ secrets.PRIVATE_REGISTRY_USERNAME }}
