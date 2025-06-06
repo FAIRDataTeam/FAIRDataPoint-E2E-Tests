@@ -3,6 +3,9 @@ name: fdp_v2
 services:
   postgres:
     image: postgres:17
+    ports:
+      # cypress requires access to the db"
+      - "127.0.0.1:54321:5432"
     healthcheck:
       test: pg_isready --dbname=fdp --username=fdp || exit 1
       start_interval: 3s
