@@ -13,22 +13,17 @@
 const { MongoClient } = require('mongodb')
 
 
-const withMongoDB = (config, callback) => {
-  return new Promise((resolve, reject) => {
-    const client = new MongoClient(config.env.mongoUrl, {
-      useNewUrlParser: true
-    })
-    client.connect((err) => {
-      if (err) {
-        reject(err)
-      } else {
-        const db = client.db(config.env.mongoDBName)
-        const result = callback(db)
-        client.close()
-        resolve(result)
-      }
-    })
-  })
+const withMongoDB = async (config, callback) => {
+  const client = new MongoClient(config.env.mongoUrl);
+  try {
+    await client.connect();
+    const db = client.db(config.env.mongoDBName);
+    return await callback(db);
+  } catch (error) {
+    throw error;
+  } finally {
+    await client.close();
+  }
 }
 
 
