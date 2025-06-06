@@ -6,10 +6,10 @@
     "test": "cypress run"
   },
   "dependencies": {
-    "mongodb": "^3.7.3",
-    "rdflib": "^1.3.4"
+    "mongodb": "^6.17.0",
+    "rdflib": "^2.2.37"
   },
   "devDependencies": {
-    "cypress": "^9.6.0"
+    "cypress": "^14.4.1"
   }
 }

@@ -2,13 +2,13 @@ name: fdp_v1
 
 services:
   mongo:
-    image: mongo:4.4
+    image: mongo:8.0
     ports:
       # cypress requires access to the db"
       - "127.0.0.1:27017:27017"
     healthcheck:
       test: |
-        [ $(mongo --quiet --host localhost:27017 --eval "db.runCommand('ping').ok") = 1 ] || exit 1
+        [ $(mongosh --quiet --host localhost:27017 --eval "db.runCommand('ping').ok") = 1 ] || exit 1
       start_interval: 3s
       start_period: 30s
 
