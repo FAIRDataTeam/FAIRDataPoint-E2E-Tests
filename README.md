@@ -7,13 +7,21 @@
 
 - `/cypress`
     - Contains all test files following the standard [Cypress structure](https://docs.cypress.io/guides/core-concepts/writing-and-organizing-tests.html#Support-file).
-- `/fdp`
-    - Contains the configuration to run FDP and other associated services in Docker.
-    - The actual Docker `compose.yml` file is generated during initialization.
+- `/compose`
+    - Git [submodule] of the [FAIRDataTeam/compose] repository, containing docker compose files for the FDP stack.
 - `/cypress.json`
     - Contains the default configuration and env.
     - You can overwrite env values [with a `cypress.env.json` file](https://docs.cypress.io/guides/guides/environment-variables.html#Option-2-cypress-env-json).
 
+## Cloning the project
+
+Because the project uses git submodules, the easiest way to clone in one go is as follows:
+
+```bash
+git clone --recurse-submodules <project-url>
+```
+
+For more information on working with git submodules, see the corresponding section in the [git book].
 
 ## Environment Variables
 
@@ -48,3 +56,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [2]: https://github.com/FAIRDataTeam/FAIRDataPoint-client
 [4]: https://www.cypress.io
 [5]: https://docs.cypress.io/app/references/command-line#Commands
+[git book]: https://git-scm.com/book/en/v2/Git-Tools-Submodules#_cloning_submodules
+[submodule]: https://git-scm.com/docs/gitsubmodules
+[FAIRDataTeam/compose]: https://github.com/FAIRDataTeam/compose
