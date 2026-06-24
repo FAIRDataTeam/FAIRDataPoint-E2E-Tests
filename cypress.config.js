@@ -1,6 +1,7 @@
 const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
+  allowCypressEnv: false,
   expose: {
     client_url: 'http://localhost',
     api_url: 'http://localhost',
@@ -18,7 +19,6 @@ module.exports = defineConfig({
   },
   screenshotsFolder: 'output/screenshots',
   videosFolder: 'output/videos',
-  videoUploadOnPasses: false,
   numTestsKeptInMemory: 1,
   viewportWidth: 1280,
   viewportHeight: 800,
