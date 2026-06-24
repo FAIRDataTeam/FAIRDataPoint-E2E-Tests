@@ -25,12 +25,18 @@ For more information on working with git submodules, see the corresponding secti
 
 ## Environment Variables
 
-When initializing the `compose.yml` file, the following ENV variables can be used to choose different images to test.
+End-to-end tests are run against a local FDP stack running in docker containers defined in the [FAIRDataTeam/compose] repo.
 
-| Name | Example | Default |
-| --- | --- | --- |
-| SERVER_VERSION | `1.16` | `develop` |
-| CLIENT_VERSION | `1.16` | `develop` |
+These docker compose files use the latest available images, but you can override the image version by specifying any of the following environment variables:
+
+- `FDP_VERSION`
+- `FDP_CLIENT_VERSION`
+
+For example:
+
+```bash
+export FDP_VERSION=1.20.2
+```
 
 ## Running the tests
 
