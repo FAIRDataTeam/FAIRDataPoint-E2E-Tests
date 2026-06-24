@@ -1,4 +1,4 @@
-import * as $rdf from 'rdflib'
+const N3 = require('n3');
 
 const apiUrl = (url) => `${Cypress.expose('api_url')}${url}`
 
@@ -128,13 +128,15 @@ Cypress.Commands.add('clearCatalogs', () => {
             })
         })
         .then((resp) => {
+            // parse response body into graph
+            const parser = new N3.Parser();
+            const store = new N3.Store(parser.parse(resp.body))
+            // check catalogs
             const apiUrl = Cypress.expose('api_url')
             const persistentUrl = Cypress.expose('persistent_url')
-            const store = $rdf.graph()
-            const subject = $rdf.namedNode(persistentUrl)
-            $rdf.parse(resp.body, store, persistentUrl, 'text/turtle')
-
-            const catalogs = store.match(subject, $rdf.namedNode('https://w3id.org/fdp/fdp-o#metadataCatalog'))
+            const subject = N3.DataFactory.namedNode(persistentUrl)
+            const predicate = N3.DataFactory.namedNode('https://w3id.org/fdp/fdp-o#metadataCatalog')
+            const catalogs = store.match(subject, predicate)
             catalogs.forEach((catalog) => {
                 const url = catalog.object.value.replace(persistentUrl, apiUrl)
                 cy.request({
