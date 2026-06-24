@@ -1,5 +1,6 @@
 const { defineConfig } = require('cypress')
 
+// https://docs.cypress.io/app/references/configuration
 module.exports = defineConfig({
   allowCypressEnv: false,
   expose: {
