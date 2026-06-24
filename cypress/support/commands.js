@@ -1,7 +1,7 @@
 // Navigation commands
 
 Cypress.Commands.add('visitClient', (url) => {
-    cy.visit(`${Cypress.env('client_url')}${url}`)
+    cy.visit(`${Cypress.expose('client_url')}${url}`)
 })
 
 // Selection commands

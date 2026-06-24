@@ -114,7 +114,7 @@ describe('Catalog', () => {
         cy.visitClient(`/catalog/${catalogUuid}`)
         cy.getCy('delete').click()
 
-        cy.url().should('eq', `${Cypress.env('client_url')}/`)
+        cy.url().should('eq', `${Cypress.expose('client_url')}/`)
         cy.get('.item-list__empty').contains('There are no catalogs.').should('exist')
     })
 
@@ -122,7 +122,7 @@ describe('Catalog', () => {
     formats.forEach((format) => {
         it(`download RDF (${format})`, () => {
             const url = `/catalog/${catalogUuid}`
-            const purl = `${Cypress.env('persistent_url')}${url}`
+            const purl = `${Cypress.expose('persistent_url')}${url}`
 
             cy.downloadRDF(url, format).then((respBody) => {
                 expect(respBody).to.contain(purl)

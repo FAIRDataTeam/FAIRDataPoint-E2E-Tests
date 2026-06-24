@@ -14,10 +14,10 @@ const { MongoClient } = require('mongodb')
 
 
 const withMongoDB = async (config, callback) => {
-  const client = new MongoClient(config.env.mongoUrl);
+  const client = new MongoClient(config.expose.mongoUrl);
   try {
     await client.connect();
-    const db = client.db(config.env.mongoDBName);
+    const db = client.db(config.expose.mongoDBName);
     return await callback(db);
   } catch (error) {
     throw error;

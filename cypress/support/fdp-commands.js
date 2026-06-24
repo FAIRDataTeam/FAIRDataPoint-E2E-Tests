@@ -1,7 +1,6 @@
 import * as $rdf from 'rdflib'
 
-
-const apiUrl = (url) => `${Cypress.env('api_url')}${url}`
+const apiUrl = (url) => `${Cypress.expose('api_url')}${url}`
 
 const createHeaders = (token) => ({ Authorization: 'Bearer ' + token })
 
@@ -9,14 +8,14 @@ const getTokenFor = (role) => cy.request({
     method: 'POST',
     url: apiUrl('/tokens'),
     body: {
-        email: Cypress.env(role + '_username'),
-        password: Cypress.env(role + '_password')
+        email: Cypress.expose(role + '_username'),
+        password: Cypress.expose(role + '_password')
     }
 })
 
 const sessionKey = () => {
-    const apiUrl = Cypress.env('api_url')
-    const clientUrl = Cypress.env('client_url')
+    const apiUrl = Cypress.expose('api_url')
+    const clientUrl = Cypress.expose('client_url')
     const prefix = apiUrl === clientUrl ? '' : apiUrl
     return `${prefix}/session`
 }
@@ -129,8 +128,8 @@ Cypress.Commands.add('clearCatalogs', () => {
             })
         })
         .then((resp) => {
-            const apiUrl = Cypress.env('api_url')
-            const persistentUrl = Cypress.env('persistent_url')
+            const apiUrl = Cypress.expose('api_url')
+            const persistentUrl = Cypress.expose('persistent_url')
             const store = $rdf.graph()
             const subject = $rdf.namedNode(persistentUrl)
             $rdf.parse(resp.body, store, persistentUrl, 'text/turtle')
@@ -195,7 +194,7 @@ const importData = (fixtureName, fixtureMapper, postUrl) => {
 
 Cypress.Commands.add('importCatalog', (catalogFixture) => {
     const fixtureMapper = (distribution) => distribution
-        .replace('{FDP_HOST}', Cypress.env('persistent_url'))
+        .replace('{FDP_HOST}', Cypress.expose('persistent_url'))
 
     return importData(catalogFixture, fixtureMapper, '/catalog')
 })
@@ -203,7 +202,7 @@ Cypress.Commands.add('importCatalog', (catalogFixture) => {
 
 Cypress.Commands.add('importDataset', (datasetFixture, catalogId) => {
     const fixtureMapper = (dataset) => dataset
-        .replace('{FDP_HOST}', Cypress.env('persistent_url'))
+        .replace('{FDP_HOST}', Cypress.expose('persistent_url'))
         .replace('{CATALOG_ID}', catalogId)
 
     return importData(datasetFixture, fixtureMapper, '/dataset')
@@ -212,7 +211,7 @@ Cypress.Commands.add('importDataset', (datasetFixture, catalogId) => {
 
 Cypress.Commands.add('importDistribution', (distributionFixture, datasetId) => {
     const fixtureMapper = (distribution) => distribution
-        .replace('{FDP_HOST}', Cypress.env('persistent_url'))
+        .replace('{FDP_HOST}', Cypress.expose('persistent_url'))
         .replace('{DATASET_ID}', datasetId)
 
     return importData(distributionFixture, fixtureMapper, '/distribution')

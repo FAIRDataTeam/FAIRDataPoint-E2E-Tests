@@ -127,7 +127,7 @@ describe('Dataset', () => {
     formats.forEach((format) => {
         it(`download RDF (${format})`, () => {
             const url = `/dataset/${datasetUuid}`
-            const purl = `${Cypress.env('persistent_url')}${url}`
+            const purl = `${Cypress.expose('persistent_url')}${url}`
 
             cy.downloadRDF(url, format).then((respBody) => {
                 expect(respBody).to.contain(purl)

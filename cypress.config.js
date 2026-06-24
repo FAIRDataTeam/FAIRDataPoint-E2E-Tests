@@ -1,7 +1,7 @@
 const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
-  env: {
+  expose: {
     client_url: 'http://localhost',
     api_url: 'http://localhost',
     persistent_url: 'http://example.com/fdp/e2e',
