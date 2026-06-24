@@ -7,37 +7,54 @@
 
 - `/cypress`
     - Contains all test files following the standard [Cypress structure](https://docs.cypress.io/guides/core-concepts/writing-and-organizing-tests.html#Support-file).
-- `/fdp`
-    - Contains the configuration to run FDP and other associated services in Docker.
-    - The actual Docker `compose.yml` file is generated during initialization.
+- `/compose`
+    - Git [submodule] of the [FAIRDataTeam/compose] repository, containing docker compose files for the FDP stack.
 - `/cypress.json`
     - Contains the default configuration and env.
     - You can overwrite env values [with a `cypress.env.json` file](https://docs.cypress.io/guides/guides/environment-variables.html#Option-2-cypress-env-json).
 
+## Cloning the project
+
+Because the project uses git submodules, the easiest way to clone in one go is as follows:
+
+```bash
+git clone --recurse-submodules <project-url>
+```
+
+For more information on working with git submodules, see the corresponding section in the [git book].
 
 ## Environment Variables
 
-When initializing the `compose.yml` file, the following ENV variables can be used to choose different images to test.
+End-to-end tests are run against a local FDP stack running in docker containers defined in the [FAIRDataTeam/compose] repo.
 
-| Name | Example | Default |
-| --- | --- | --- |
-| SERVER_VERSION | `1.16` | `develop` |
-| CLIENT_VERSION | `1.16` | `develop` |
+These docker compose files use the latest available images, but you can override the image version by specifying any of the following environment variables:
+
+- `FDP_VERSION`
+- `FDP_CLIENT_VERSION`
+
+For example:
+
+```bash
+export FDP_VERSION=1.20.2
+```
 
 ## Running the tests
 
-Makefile contains several commands to work with the project.
-
-- `make install` - install all the dependencies to run the tests
-- `make start` - start all containers
-- `make stop` - stop all containers
-- `make run` - run tests in headless mode
-- `make open` - open Cypress app, good for local development
-- `make ci` - shortcut for the whole workflow in CI
-- `make clean` - clean all generated files
-
-For convenience, it is also possible to run the tests through `npm run test`.
-To add [cypress cli options][5], use `--`, e.g. `npm run test -- <cypress options>`.
+1. Run the docker compose file corresponding to the stack you want to test.
+   ```bash
+   cd compose/fdp/ephemeral/v1
+   docker compose up -d 
+   ```
+   See [FAIRDataTeam/compose] for detailed instructions on other available stacks.
+2. Run the tests using npm's `npx`:
+   ```bash
+   npx cypress run [options]
+   ```
+   See [cypress run docs] and [cypress cli options] for more info.
+3. Tear down the FDP compose stack when finished
+   ```bash
+   docker compose down [--volumes]
+   ```
 
 ## License
 
@@ -47,4 +64,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [1]: https://github.com/FAIRDataTeam/FAIRDataPoint
 [2]: https://github.com/FAIRDataTeam/FAIRDataPoint-client
 [4]: https://www.cypress.io
-[5]: https://docs.cypress.io/app/references/command-line#Commands
+[cypress run docs]: https://docs.cypress.io/app/references/command-line#How-to-run-commands
+[cypress cli options]: https://docs.cypress.io/app/references/command-line#Commands
+[git book]: https://git-scm.com/book/en/v2/Git-Tools-Submodules#_cloning_submodules
+[submodule]: https://git-scm.com/docs/gitsubmodules
+[FAIRDataTeam/compose]: https://github.com/FAIRDataTeam/compose
