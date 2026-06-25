@@ -64,7 +64,7 @@ jobs:
         browser: ${{ matrix.browser }}
         headed: false
         record: false
-        parallel: true
+        parallel: false
         group: 'FDP E2E Test @ GitHub Actions'
       env:
         CYPRESS_RETRIES: 3
