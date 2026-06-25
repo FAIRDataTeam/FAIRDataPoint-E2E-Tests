@@ -1,0 +1,72 @@
+name: FAIRDataPoint E2E Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      server_image:
+        description: 'FDP image'
+        required: false
+        default: 'fairdata/fairdatapoint:master'
+      client_image:
+        description: 'FDP-Client image'
+        required: false
+        default: 'fairdata/fairdatapoint-client:develop'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fdp-e2e:
+    name: Run FAIRDataPoint E2E Tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        browser: [chrome, edge]  # todo: add firefox once we've figured out the reason for #28
+
+    steps:
+    - # https://github.com/actions/checkout
+      uses: actions/checkout@v7
+      with:
+        submodules: true
+
+    - name: Set variables from repository dispatch
+      if: github.event_name == 'repository_dispatch'
+      # https://github.com/allenevans/set-env
+      # todo: remove the allenevans/set-env dependencies (probably not needed)
+      uses: allenevans/set-env@v4.0.0
+      with:
+        SERVER_IMAGE: ${{ github.event.client_payload.server_image }}
+        CLIENT_IMAGE: ${{ github.event.client_payload.client_image }}
+
+    - name: Set variables from workflow dispatch
+      if: github.event_name == 'workflow_dispatch'
+      uses: allenevans/set-env@v4.0.0
+      with:
+        SERVER_IMAGE: ${{ github.event.inputs.server_image }}
+        CLIENT_IMAGE: ${{ github.event.inputs.client_image }}
+
+    - name: set up docker containers for FDP stack
+      run: |
+        cd compose/fdp/ephemeral/v1/dev/e2e
+        docker compose up -d
+
+    - name: Run Cypress
+      # https://github.com/cypress-io/github-action
+      uses: cypress-io/github-action@v7
+      with:
+        # https://docs.cypress.io/app/continuous-integration/github-actions
+        browser: ${{ matrix.browser }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: tear down docker containers
+      run: |
+        cd compose/fdp/ephemeral/v1/dev/e2e
+        docker compose down
