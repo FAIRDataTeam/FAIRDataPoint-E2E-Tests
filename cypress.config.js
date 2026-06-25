@@ -1,4 +1,5 @@
 const { defineConfig } = require('cypress')
+const registerMongoDBPlugin = require('./cypress/plugins/index.js')
 
 // https://docs.cypress.io/app/references/configuration
 module.exports = defineConfig({
@@ -27,10 +28,8 @@ module.exports = defineConfig({
   e2e: {
     // see https://docs.cypress.io/app/core-concepts/best-practices#Setting-a-Global-baseUrl
     baseUrl: 'http://localhost',
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config)
+      registerMongoDBPlugin(on, config)
     },
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
   },
