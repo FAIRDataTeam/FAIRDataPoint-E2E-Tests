@@ -198,7 +198,7 @@ describe('Resource Definitions', () => {
         cy.get('[data-cy="create"]').click()
         cy.fillFields({
             title: `My Book ${hash}`,
-            hasVersion: '1.2.3',
+            version: '1.2.3',
             name: 'Publisher name'
         })
         cy.getCy('save').click()

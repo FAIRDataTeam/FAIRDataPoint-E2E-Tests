@@ -80,7 +80,7 @@ describe('Distribution', () => {
         const newData = {
             title: 'My Distribution',
             description: 'This is a description of my distribution',
-            hasVersion: '1.2.3',
+            version: '1.2.3',
             license: 'http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd4.0',
             language: 'http://id.loc.gov/vocabulary/iso639-1/de'
         }
@@ -102,7 +102,7 @@ describe('Distribution', () => {
         const data = {
             title: 'My test distribution',
             description: 'This is a description of my test distribution',
-            hasVersion: 'v2',
+            version: 'v2',
             license: 'http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd4.0',
             language: 'http://id.loc.gov/vocabulary/iso639-1/de',
             mediaType: 'application/json',
@@ -116,7 +116,7 @@ describe('Distribution', () => {
         cy.get('.description').contains(data.description).should('exist')
         cy.get('.entity-metadata__item').contains('cc-by-nc-nd4.0').should('have.attr', 'href', data.license)
         cy.get('.entity-metadata__item').contains('de').should('have.attr', 'href', data.language)
-        cy.get('.entity-metadata__item').contains(data.hasVersion).should('exist')
+        cy.get('.entity-metadata__item').contains(data.version).should('exist')
         cy.get('.entity-metadata__item').contains(data.mediaType).should('exist')
     })
 
@@ -138,7 +138,7 @@ describe('Distribution', () => {
         const accessURL = 'http://example.com/access-online'
         const data = {
             title: 'My test distribution',
-            hasVersion: 'v2',
+            version: 'v2',
             mediaType: 'application/json',
             name: 'Publisher Name',
             accessURL
@@ -159,7 +159,7 @@ describe('Distribution', () => {
         const downloadURL = 'http://example.com/download'
         const data = {
             title: 'My test distribution',
-            hasVersion: 'v2',
+            version: 'v2',
             mediaType: 'application/json',
             name: 'Publisher Name',
             downloadURL

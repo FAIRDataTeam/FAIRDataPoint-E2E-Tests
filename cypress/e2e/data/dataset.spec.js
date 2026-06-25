@@ -75,7 +75,7 @@ describe('Dataset', () => {
         const newData = {
             title: 'My Dataset',
             description: 'This is a description of my dataset',
-            hasVersion: '1.2.3',
+            version: '1.2.3',
             license: 'http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd4.0',
             language: 'http://id.loc.gov/vocabulary/iso639-1/de'
         }
@@ -97,7 +97,7 @@ describe('Dataset', () => {
         const data = {
             title: 'My test dataset',
             description: 'This is a description of my test dataset',
-            hasVersion: 'v2',
+            version: 'v2',
             license: 'http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd4.0',
             language: 'http://id.loc.gov/vocabulary/iso639-1/de',
             name: 'Publisher Name',
@@ -111,7 +111,7 @@ describe('Dataset', () => {
         cy.get('.description').contains(data.description).should('exist')
         cy.get('.entity-metadata__item').contains('cc-by-nc-nd4.0').should('have.attr', 'href', data.license)
         cy.get('.entity-metadata__item').contains('de').should('have.attr', 'href', data.language)
-        cy.get('.entity-metadata__item').contains(data.hasVersion).should('exist')
+        cy.get('.entity-metadata__item').contains(data.version).should('exist')
     })
 
     it('delete', () => {
