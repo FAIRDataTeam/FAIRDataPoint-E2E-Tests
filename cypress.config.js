@@ -25,6 +25,8 @@ module.exports = defineConfig({
   viewportHeight: 800,
   projectId: '4bva4n',
   e2e: {
+    // see https://docs.cypress.io/app/core-concepts/best-practices#Setting-a-Global-baseUrl
+    baseUrl: 'http://localhost',
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
