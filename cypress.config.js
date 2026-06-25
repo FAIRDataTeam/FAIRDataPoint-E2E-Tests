@@ -7,7 +7,7 @@ module.exports = defineConfig({
   expose: {
     client_url: 'http://localhost',
     api_url: 'http://localhost',
-    persistent_url: 'http://example.com/fdp/e2e',
+    persistent_url: 'http://localhost',
     admin_username: 'albert.einstein@example.com',
     admin_password: 'password',
     admin_first_name: 'Albert',
