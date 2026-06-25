@@ -26,6 +26,10 @@ jobs:
     name: Run FAIRDataPoint E2E Tests
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        browser: [chrome, edge, firefox]
+
     steps:
     - # https://github.com/actions/checkout
       uses: actions/checkout@v7
@@ -54,11 +58,12 @@ jobs:
 
     - name: Run Cypress
       # https://github.com/cypress-io/github-action
-      uses: cypress-io/github-action@v7.4.0
+      uses: cypress-io/github-action@v7
       with:
-        browser: chrome
-        headless: true
-        record: true
+        # https://docs.cypress.io/app/continuous-integration/github-actions
+        browser: ${{ matrix.browser }}
+        headed: false
+        record: false
         parallel: true
         group: 'FDP E2E Test @ GitHub Actions'
       env:
