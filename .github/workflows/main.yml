@@ -62,12 +62,7 @@ jobs:
       with:
         # https://docs.cypress.io/app/continuous-integration/github-actions
         browser: ${{ matrix.browser }}
-        headed: false
-        record: false
-        parallel: false
-        group: 'FDP E2E Test @ GitHub Actions'
       env:
-        CYPRESS_RETRIES: 3
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: tear down docker containers
