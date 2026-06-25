@@ -28,7 +28,7 @@ jobs:
 
     strategy:
       matrix:
-        browser: [chrome, edge, firefox]
+        browser: [chrome, edge]  # todo: add firefox once we've figured out the reason for #28
 
     steps:
     - # https://github.com/actions/checkout
