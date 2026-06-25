@@ -29,12 +29,12 @@ describe('Dataset', () => {
     })
 
     it('view list', () => {
-        cy.visitClient(`/catalog/${catalogUuid}`)
+        cy.visit(`/catalog/${catalogUuid}`)
         cy.get('[data-cy=item-list] [data-cy=item]').contains(datasetName)
     })
 
     it('view detail', () => {
-        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.visit(`/dataset/${datasetUuid}`)
 
         // check breadcrumbs
         cy.getCy('breadcrumbs-link').contains(repositoryName)
@@ -48,7 +48,7 @@ describe('Dataset', () => {
     it('add user as Owner', () => {
         // login as admin and navigate to settings
         cy.loginAs('admin')
-        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.visit(`/dataset/${datasetUuid}`)
         cy.getCy('settings').click()
         cy.get('h1').contains(`${datasetName} Settings`)
 
@@ -61,14 +61,14 @@ describe('Dataset', () => {
         // login as other user and check the access
         cy.logout()
         cy.loginAs('user')
-        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.visit(`/dataset/${datasetUuid}`)
         cy.getCy('membership-badge').contains('Owner')
     })
 
     it('edit', () => {
         // login as admin and edit the dataset
         cy.loginAs('admin')
-        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.visit(`/dataset/${datasetUuid}`)
         cy.getCy('edit').click()
 
         // fill in the new data and save
@@ -90,7 +90,7 @@ describe('Dataset', () => {
 
     it('create', () => {
         cy.loginAs('admin')
-        cy.visitClient(`/catalog/${catalogUuid}`)
+        cy.visit(`/catalog/${catalogUuid}`)
         cy.getCy('create').click()
 
         cy.url().should('include', 'create-dataset')
@@ -116,7 +116,7 @@ describe('Dataset', () => {
 
     it('delete', () => {
         cy.loginAs('admin')
-        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.visit(`/dataset/${datasetUuid}`)
         cy.getCy('delete').click()
 
         cy.url().should('include', `/catalog/${catalogUuid}`)

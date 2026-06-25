@@ -82,7 +82,7 @@ describe('Resource Definitions', () => {
         })
 
         cy.loginAs('admin')
-        cy.visitClient('/resource-definitions')
+        cy.visit('/resource-definitions')
     })
 
     after(() => {
@@ -96,7 +96,7 @@ describe('Resource Definitions', () => {
         cy.getCy('save').click()
 
         // Check there is no distribution list
-        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.visit(`/dataset/${datasetUuid}`)
         cy.get('h1').contains('Gene disease association (LUMC)')
         cy.getCy('item-list').should('not.exist')
     })
@@ -113,7 +113,7 @@ describe('Resource Definitions', () => {
         cy.getCy('save').click()
 
         // Open Repository and check the empty dataset list view
-        cy.visitClient('/')
+        cy.visit('/')
         cy.get('.nav-link').contains('Datasets').should('exist')
     })
 
@@ -131,7 +131,7 @@ describe('Resource Definitions', () => {
         cy.get('label').contains('Child Resource').should('not.exist')
 
         // Check that the dataset details contains no distributions
-        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.visit(`/dataset/${datasetUuid}`)
         cy.get('h1').contains('Gene disease association (LUMC)')
         cy.get('h2').should('not.exist')
         cy.get('.status-flash__alert--danger').should('not.exist')
@@ -144,7 +144,7 @@ describe('Resource Definitions', () => {
         cy.getCy('save').click()
 
         // Check that the link is gone
-        cy.visitClient(`/distribution/${distributionUuid}`)
+        cy.visit(`/distribution/${distributionUuid}`)
         cy.get('h1').contains('GDA lumc SPARQL endpoint')
         cy.getCy('external-link').should('not.exist')
     })
@@ -160,7 +160,7 @@ describe('Resource Definitions', () => {
         cy.getCy('save').click()
 
         // Check that the link is there
-        cy.visitClient(`/catalog/${catalogUuid}`)
+        cy.visit(`/catalog/${catalogUuid}`)
         cy.get('h1').contains('Catalog for textmining datasets')
         cy.getCy('external-link')
             .should('have.attr', 'href', 'http://id.loc.gov/vocabulary/iso639-1/en')
@@ -193,7 +193,7 @@ describe('Resource Definitions', () => {
         cy.getCy('save').click()
 
         // Check we have books on repository and create a new one
-        cy.visitClient('/')
+        cy.visit('/')
         cy.get('.nav-link').contains('Books').click()
         cy.get('[data-cy="create"]').click()
         cy.fillFields({
@@ -206,7 +206,7 @@ describe('Resource Definitions', () => {
         cy.get('h1').contains('My Book')
 
         // Check the book is visible in repository list
-        cy.visitClient('/')
+        cy.visit('/')
         cy.get('.nav-link').contains('Books').click()
         cy.getCy('item').contains(`My Book ${hash}`).click()
         cy.url().should('contain', `/${urlPrefix}/`)
@@ -225,7 +225,7 @@ describe('Resource Definitions', () => {
             // login as other user and check the access
             cy.logout()
             cy.loginAs('user')
-            cy.visitClient('/')
+            cy.visit('/')
             cy.get('.nav-link').contains('Books').click()
             cy.getCy('item').contains(`My Book ${hash}`).click()
             cy.url().should('contain', `/${urlPrefix}/`)

@@ -1,7 +1,7 @@
 describe('Repository', () => {
     it('edit', () => {
         cy.loginAs('admin')
-        cy.visitClient('/')
+        cy.visit('/')
         cy.getCy('edit').click()
 
         // fill `in the new data and save

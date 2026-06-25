@@ -1,6 +1,6 @@
 describe('Login', () => {
     beforeEach(() => {
-        cy.visitClient('/login')
+        cy.visit('/login')
     })
 
     const roles = [{

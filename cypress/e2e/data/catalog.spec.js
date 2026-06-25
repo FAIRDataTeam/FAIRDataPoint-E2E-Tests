@@ -23,12 +23,12 @@ describe('Catalog', () => {
     })
 
     it('view list', () => {
-        cy.visitClient('/')
+        cy.visit('/')
         cy.get('[data-cy=item-list] [data-cy=item]').contains(catalogName)
     })
 
     it('view detail', () => {
-        cy.visitClient(`/catalog/${catalogUuid}`)
+        cy.visit(`/catalog/${catalogUuid}`)
 
         // check breadcrumbs
         cy.getCy('breadcrumbs-link').contains(repositoryName)
@@ -43,7 +43,7 @@ describe('Catalog', () => {
         it(`add user as ${role}`, () => {
             // login as admin and navigate to settings
             cy.loginAs('admin')
-            cy.visitClient(`/catalog/${catalogUuid}`)
+            cy.visit(`/catalog/${catalogUuid}`)
             cy.getCy('settings').click()
             cy.get('h1').contains(`${catalogName} Settings`)
 
@@ -56,7 +56,7 @@ describe('Catalog', () => {
             // login as other user and check the access
             cy.logout()
             cy.loginAs('user')
-            cy.visitClient(`/catalog/${catalogUuid}`)
+            cy.visit(`/catalog/${catalogUuid}`)
             cy.getCy('membership-badge').contains(role)
         })
     })
@@ -64,7 +64,7 @@ describe('Catalog', () => {
     it('edit', () => {
         // login as admin and edit the catalog
         cy.loginAs('admin')
-        cy.visitClient(`/catalog/${catalogUuid}`)
+        cy.visit(`/catalog/${catalogUuid}`)
         cy.getCy('edit').click()
 
         // fill in the new data and save
@@ -86,7 +86,7 @@ describe('Catalog', () => {
 
     it('create', () => {
         cy.loginAs('user')
-        cy.visitClient('/')
+        cy.visit('/')
         cy.getCy('create').click()
 
         cy.url().should('include', 'create-catalog')
@@ -111,7 +111,7 @@ describe('Catalog', () => {
 
     it('delete', () => {
         cy.loginAs('admin')
-        cy.visitClient(`/catalog/${catalogUuid}`)
+        cy.visit(`/catalog/${catalogUuid}`)
         cy.getCy('delete').click()
 
         cy.url().should('eq', `${Cypress.expose('client_url')}/`)

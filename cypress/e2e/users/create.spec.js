@@ -14,7 +14,7 @@ describe('Users Create', () => {
             args: { email: user.email }
         })
         cy.loginAs('admin')
-        cy.visitClient('/users')
+        cy.visit('/users')
     })
 
     it('can be created', () => {
@@ -29,7 +29,7 @@ describe('Users Create', () => {
 
         // check that the new user can log in
         cy.logout()
-        cy.visitClient('/login')
+        cy.visit('/login')
         cy.fillFields({
             email: user.email,
             password: user.password
