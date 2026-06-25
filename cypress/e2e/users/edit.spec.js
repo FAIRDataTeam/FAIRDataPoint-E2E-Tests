@@ -23,7 +23,7 @@ describe('Users Edit', () => {
         })
         cy.createUser(user)
         cy.loginAs('admin')
-        cy.visitClient('/users')
+        cy.visit('/users')
     })
 
     it('can edit profile', () => {
@@ -41,7 +41,7 @@ describe('Users Edit', () => {
         cy.getCy('save-profile').click()
 
         // check that the user has been updated in the list view
-        cy.visitClient('/users')
+        cy.visit('/users')
         getUserItem(newEmail)
             .should('contain', newUser.firstName)
             .and('contain', newUser.lastName)
@@ -66,7 +66,7 @@ describe('Users Edit', () => {
 
         // logout and try to login with updated password
         cy.logout()
-        cy.visitClient('/login')
+        cy.visit('/login')
         cy.fillFields({
             email: user.email,
             password

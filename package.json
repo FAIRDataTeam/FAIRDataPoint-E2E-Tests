@@ -1,15 +1,10 @@
 {
-  "name": "dsw-e2e-tests",
-  "version": "0.1.0",
+  "name": "fdp-e2e-tests",
+  "version": "0.2.0",
   "license": "MIT",
-  "scripts": {
-    "test": "cypress run"
-  },
   "dependencies": {
-    "mongodb": "^6.17.0",
-    "rdflib": "^2.2.37"
-  },
-  "devDependencies": {
-    "cypress": "^14.4.1"
+    "cypress": "^15.18.0",
+    "mongodb": "^7.3.0",
+    "n3": "^2.1.0"
   }
 }

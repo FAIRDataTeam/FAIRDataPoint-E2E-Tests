@@ -64,7 +64,7 @@ describe('Metadata Schemas', () => {
     }
 
     const addSchema = (schemaName, resourceName, schemaIndex = 1) => {
-        cy.visitClient('/resource-definitions')
+        cy.visit('/resource-definitions')
         cy.getCy('resource-definition-link').contains(resourceName).click()
         cy.getCy('add-metadata-schema').click()
         cy.get(`[name="metadataSchemaUuids.${schemaIndex}.uuid"]`).select(schemaName)
@@ -72,7 +72,7 @@ describe('Metadata Schemas', () => {
     }
 
     const editEntity = (entityPage, fields) => {
-        cy.visitClient(entityPage)
+        cy.visit(entityPage)
         cy.get('.status-flash__alert--danger').should('not.exist')
         cy.getCy('edit').click()
         cy.fillFields(fields)
@@ -142,7 +142,7 @@ describe('Metadata Schemas', () => {
             })
         })
         cy.loginAs('admin')
-        cy.visitClient('/schemas')
+        cy.visit('/schemas')
     })
 
     after(() => {
@@ -170,7 +170,7 @@ describe('Metadata Schemas', () => {
         addSchema('Catalog Extra', 'Catalog')
 
         // edit catalog with the new fields
-        cy.visitClient(entityPage)
+        cy.visit(entityPage)
         cy.get('.status-flash__alert--danger').should('not.exist')
         cy.getCy('edit').click()
         cy.get('.form__group .btn-link').contains('Add').click({ force: true })

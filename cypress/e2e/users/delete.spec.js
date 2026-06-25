@@ -18,7 +18,7 @@ describe('Users Delete', () => {
         })
         cy.createUser(user)
         cy.loginAs('admin')
-        cy.visitClient('/users')
+        cy.visit('/users')
     })
 
     it('can be deleted', () => {

@@ -1,7 +1,10 @@
 const { defineConfig } = require('cypress')
+const registerMongoDBPlugin = require('./cypress/plugins/index.js')
 
+// https://docs.cypress.io/app/references/configuration
 module.exports = defineConfig({
-  env: {
+  allowCypressEnv: false,
+  expose: {
     client_url: 'http://localhost',
     api_url: 'http://localhost',
     persistent_url: 'http://example.com/fdp/e2e',
@@ -18,16 +21,15 @@ module.exports = defineConfig({
   },
   screenshotsFolder: 'output/screenshots',
   videosFolder: 'output/videos',
-  videoUploadOnPasses: false,
   numTestsKeptInMemory: 1,
   viewportWidth: 1280,
   viewportHeight: 800,
   projectId: '4bva4n',
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
+    // see https://docs.cypress.io/app/core-concepts/best-practices#Setting-a-Global-baseUrl
+    baseUrl: 'http://localhost',
     setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config)
+      registerMongoDBPlugin(on, config)
     },
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
   },

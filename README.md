@@ -42,7 +42,7 @@ export FDP_VERSION=1.20.2
 
 1. Run the docker compose file corresponding to the stack you want to test.
    ```bash
-   cd compose/fdp/ephemeral/v1
+   cd compose/fdp/ephemeral/v1/dev/e2e
    docker compose up -d 
    ```
    See [FAIRDataTeam/compose] for detailed instructions on other available stacks.

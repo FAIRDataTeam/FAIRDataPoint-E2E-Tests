@@ -33,12 +33,12 @@ describe('Distribution', () => {
     })
 
     it('view list', () => {
-        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.visit(`/dataset/${datasetUuid}`)
         cy.get('[data-cy=item-list] [data-cy=item]').contains(distributionName)
     })
 
     it('view detail', () => {
-        cy.visitClient(`/distribution/${distributionUuid}`)
+        cy.visit(`/distribution/${distributionUuid}`)
 
         // check breadcrumbs
         cy.getCy('breadcrumbs-link').contains(repositoryName)
@@ -53,7 +53,7 @@ describe('Distribution', () => {
     it('add user as Owner', () => {
         // login as admin and navigate to settings
         cy.loginAs('admin')
-        cy.visitClient(`/distribution/${distributionUuid}`)
+        cy.visit(`/distribution/${distributionUuid}`)
         cy.getCy('settings').click()
         cy.get('h1').contains(`${distributionName} Settings`)
 
@@ -66,14 +66,14 @@ describe('Distribution', () => {
         // login as other user and check the access
         cy.logout()
         cy.loginAs('user')
-        cy.visitClient(`/distribution/${distributionUuid}`)
+        cy.visit(`/distribution/${distributionUuid}`)
         cy.getCy('membership-badge').contains('Owner')
     })
 
     it('edit', () => {
         // login as admin and edit the distribution
         cy.loginAs('admin')
-        cy.visitClient(`/distribution/${distributionUuid}`)
+        cy.visit(`/distribution/${distributionUuid}`)
         cy.getCy('edit').click()
 
         // fill in the new data and save
@@ -95,7 +95,7 @@ describe('Distribution', () => {
 
     it('create', () => {
         cy.loginAs('admin')
-        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.visit(`/dataset/${datasetUuid}`)
         cy.getCy('create').click()
 
         cy.url().should('include', 'create-distribution')
@@ -122,7 +122,7 @@ describe('Distribution', () => {
 
     it('delete', () => {
         cy.loginAs('admin')
-        cy.visitClient(`/distribution/${distributionUuid}`)
+        cy.visit(`/distribution/${distributionUuid}`)
         cy.getCy('delete').click()
 
         cy.url().should('include', `/dataset/${datasetUuid}`)
@@ -131,7 +131,7 @@ describe('Distribution', () => {
 
     it('create with access URL', () => {
         cy.loginAs('admin')
-        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.visit(`/dataset/${datasetUuid}`)
         cy.getCy('create').click()
 
         cy.url().should('include', 'create-distribution')
@@ -152,7 +152,7 @@ describe('Distribution', () => {
 
     it('create with download URL', () => {
         cy.loginAs('admin')
-        cy.visitClient(`/dataset/${datasetUuid}`)
+        cy.visit(`/dataset/${datasetUuid}`)
         cy.getCy('create').click()
 
         cy.url().should('include', 'create-distribution')
@@ -175,7 +175,7 @@ describe('Distribution', () => {
     formats.forEach((format) => {
         it(`download RDF (${format})`, () => {
             const url = `/distribution/${distributionUuid}`
-            const purl = `${Cypress.env('persistent_url')}${url}`
+            const purl = `${Cypress.expose('persistent_url')}${url}`
 
             cy.downloadRDF(url, format).then((respBody) => {
                 expect(respBody).to.contain(purl)

@@ -1,6 +1,6 @@
 describe('Swagger', () => {
     it('works', () => {
-        cy.visitClient('/swagger-ui.html')
+        cy.visit('/swagger-ui.html')
         cy.get('h2.title').contains('FAIR Data Point API')
 
         cy.get('a').contains('configs').click()
