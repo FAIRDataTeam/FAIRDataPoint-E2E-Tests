@@ -29,6 +29,8 @@ jobs:
     steps:
     - # https://github.com/actions/checkout
       uses: actions/checkout@v7
+      with:
+        submodules: true
 
     - name: Set variables from repository dispatch
       if: github.event_name == 'repository_dispatch'
