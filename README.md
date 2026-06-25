@@ -9,9 +9,8 @@
     - Contains all test files following the standard [Cypress structure](https://docs.cypress.io/guides/core-concepts/writing-and-organizing-tests.html#Support-file).
 - `/compose`
     - Git [submodule] of the [FAIRDataTeam/compose] repository, containing docker compose files for the FDP stack.
-- `/cypress.json`
+- `/cypress.config.js`
     - Contains the default configuration and env.
-    - You can overwrite env values [with a `cypress.env.json` file](https://docs.cypress.io/guides/guides/environment-variables.html#Option-2-cypress-env-json).
 
 ## Cloning the project
 
@@ -51,6 +50,8 @@ export FDP_VERSION=1.20.2
    npx cypress run [options]
    ```
    See [cypress run docs] and [cypress cli options] for more info.
+   For example, to test with a specific browser, use e.g. `--browser firefox`.
+   To run a specific file, use e.g. `--spec cypress/e2e/configuration/metadata-schemas.spec.js`
 3. Tear down the FDP compose stack when finished
    ```bash
    docker compose down [--volumes]
