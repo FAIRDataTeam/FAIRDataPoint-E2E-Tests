@@ -39,6 +39,7 @@ jobs:
     - name: Set variables from repository dispatch
       if: github.event_name == 'repository_dispatch'
       # https://github.com/allenevans/set-env
+      # todo: remove the allenevans/set-env dependencies (probably not needed)
       uses: allenevans/set-env@v4.0.0
       with:
         SERVER_IMAGE: ${{ github.event.client_payload.server_image }}
