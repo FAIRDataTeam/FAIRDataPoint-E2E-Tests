@@ -12,11 +12,11 @@ on:
       fdp_version:
         description: 'FDP image version'
         required: false
-        default: 'master'
+        default: 'latest'
       fdp_client_version:
         description: 'FDP-Client image version'
         required: false
-        default: 'develop'
+        default: 'latest'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
