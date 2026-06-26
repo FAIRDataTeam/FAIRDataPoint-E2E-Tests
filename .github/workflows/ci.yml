@@ -6,6 +6,7 @@ on:
       - master
   pull_request:
   repository_dispatch:
+    types: [trigger-tests]
   workflow_dispatch:
     inputs:
       fdp_version:
