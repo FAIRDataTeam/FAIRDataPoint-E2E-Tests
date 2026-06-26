@@ -6,16 +6,17 @@ on:
       - master
   pull_request:
   repository_dispatch:
+    types: [trigger-tests]
   workflow_dispatch:
     inputs:
-      server_image:
-        description: 'FDP image'
+      fdp_version:
+        description: 'FDP image version'
         required: false
-        default: 'fairdata/fairdatapoint:master'
-      client_image:
-        description: 'FDP-Client image'
+        default: 'master'
+      fdp_client_version:
+        description: 'FDP-Client image version'
         required: false
-        default: 'fairdata/fairdatapoint-client:develop'
+        default: 'develop'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -42,15 +43,15 @@ jobs:
       # todo: remove the allenevans/set-env dependencies (probably not needed)
       uses: allenevans/set-env@v4.0.0
       with:
-        SERVER_IMAGE: ${{ github.event.client_payload.server_image }}
-        CLIENT_IMAGE: ${{ github.event.client_payload.client_image }}
+        FDP_VERSION: ${{ github.event.client_payload.fdp_version }}
+        FDP_CLIENT_VERSION: ${{ github.event.client_payload.fdp_client_version }}
 
     - name: Set variables from workflow dispatch
       if: github.event_name == 'workflow_dispatch'
       uses: allenevans/set-env@v4.0.0
       with:
-        SERVER_IMAGE: ${{ github.event.inputs.server_image }}
-        CLIENT_IMAGE: ${{ github.event.inputs.client_image }}
+        FDP_VERSION: ${{ github.event.inputs.fdp_version }}
+        FDP_CLIENT_VERSION: ${{ github.event.inputs.fdp_client_version }}
 
     - name: set up docker containers for FDP stack
       run: |
