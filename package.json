@@ -4,7 +4,7 @@
   "license": "MIT",
   "dependencies": {
     "cypress": "^15.18.0",
-    "mongodb": "^7.3.0",
+    "mongodb": "^7.4.0",
     "n3": "^2.1.0"
   }
 }
