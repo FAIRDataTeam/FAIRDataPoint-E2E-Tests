@@ -1,5 +1,5 @@
 describe('Catalog', () => {
-    const repositoryName = 'My FAIR Data Point'
+    const fdpName = 'My FAIR Data Point'
     const catalogName = 'Catalog for textmining datasets'
     
     let catalogUuid = null
@@ -31,8 +31,8 @@ describe('Catalog', () => {
         cy.visit(`/catalog/${catalogUuid}`)
 
         // check breadcrumbs
-        // todo: for some reason the link value can change from one run to the next, either showing repositoryName or "Catalogs"...
-        // cy.getCy('breadcrumbs-link').contains(repositoryName)
+        // todo: for some reason the link value can change from one run to the next, either showing fdpName or "Catalogs"...
+        // cy.getCy('breadcrumbs-link').contains(fdpName)
         cy.getCy('breadcrumbs-current').contains(catalogName)
         
         // content
