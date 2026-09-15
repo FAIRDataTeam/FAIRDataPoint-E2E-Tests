@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "license": "MIT",
   "dependencies": {
-    "cypress": "^15.18.0",
+    "cypress": "^16.0.0",
     "mongodb": "^7.6.0",
     "n3": "^2.7.4"
   }
